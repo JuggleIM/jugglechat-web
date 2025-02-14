@@ -127,6 +127,7 @@
 } */
 .badge{
   --bs-badge-font-size: 0.6rem;
+  z-index: 1055;
 }
 .tyn-reply-tools .wr-more::before{
   font-size: 1.4rem;
