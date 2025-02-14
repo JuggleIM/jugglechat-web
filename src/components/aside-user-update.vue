@@ -90,9 +90,9 @@ function onNameInput(){
       <div class="form-group">
         <input type="text" class="form-control" :class="{'form-control-warn': state.isNameError}" placeholder="输入昵称" v-model="state.username" @input="onNameInput()">
       </div>
-      <div class="form-group form-avatars">
+      <!-- <div class="form-group form-avatars">
         <div class="form-avatar wr" @click.stop="onSelected(avatar)" :class="{'wr-mark form-avatar-selected': avatar.isSelected}" v-for="avatar in state.avatars" :style="{ 'background-image': 'url(' + avatar.url + ')' }"></div>
-      </div>
+      </div> -->
       <div class="form-group">
         <div class="form-control-wrap">
           <a class="btn btn-primary-soft w-100" @click="onConfirm()">保存</a>
