@@ -3,6 +3,7 @@ import utils from "../../common/utils";
 import { reactive, getCurrentInstance, nextTick, watch } from "vue";
 import { useRouter } from "vue-router";
 import Conversation from "./conversation.vue";
+import Avatar from "../../components/avatar.vue";
 import None from "./none.vue";
 
 import { STORAGE, EVENT_NAME, CONVERATION_TAG_ID, CONVERSATION_TAG_TYPE } from "../../common/enum";
@@ -368,11 +369,22 @@ function onTagConversationChanged({ removes, adds, tag }){
               @mouseleave="onHideTopDrop()"
               @click="onConversation(item)"
             >
-              <div
+
+              <!-- <div
                 class="tyn-avatar tyn-topitem-avatar"
                 :style="{'background-image': 'url(' + item.conversationPortrait + ')'}"
                 @click.right.prevent="onShowTopDropmenu(index)"
-              ></div>
+              ></div> -->
+              <Avatar 
+                :cls="'tyn-topitem-avatar tyn-md-avatar'"
+                :avatar="messageUtils.isGroup(item) ? '' :item.conversationPortrait"
+                :name="item.conversationTitle"
+                @click.right.prevent="onShowTopDropmenu(index)">
+              </Avatar>
+
+
+
+
               <div class="tyn-topitem-name">{{ item.conversationTitle || 'JG' }}</div>
               <ul class="tyn-media-option-list">
                 <li class="dropdown">

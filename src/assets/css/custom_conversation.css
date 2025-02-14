@@ -108,6 +108,9 @@
 .tyn-s-avatar .inner{
   font-size: 1.6rem;
 }
+.tyn-md-avatar .inner{
+  font-size: 1rem;
+}
 .jg-size-md{
   height: var(--tyn-size) !important;
   width: var(--tyn-size) !important;
