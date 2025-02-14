@@ -13,6 +13,7 @@ import AsiderUserAccount from "../../components/aside-user-account.vue";
 import AsiderQrCode from "../../components/aside-qrcode.vue";
 import AsideFavoriteMsg from "../../components/aside-msg-favorite.vue";
 import AsideUserAgreement from "../../components/aside-user-agreement.vue";
+import Avatar from "../../components/avatar.vue";
 
 import { STORAGE } from "../../common/enum";
 import Storage from "../../common/storage";
@@ -112,7 +113,12 @@ emitter.$on(EVENT_NAME.ON_USER_INFO_UPDATE, ({ user }) => {
           <li class="jg-card jg-card-userinfo">
             <ul class="jg-ul">
               <li class="jg-li jg-card-li-userinfo">
-                <div class="tyn-avatar jg-header-user-avatar" :style="{ 'background-image': 'url(' + state.user.portrait + ')' }"></div>
+                <Avatar
+                  :cls="'tyn-ss-avatar jg-header-user-avatar'"
+                  :avatar="state.user.portrait"
+                  :name="state.user.name || state.user.id">
+                </Avatar>
+
                 <div class="jg-header-user-name">{{ state.user.name || state.user.id }}</div>
               </li>
               <li class="jg-li">

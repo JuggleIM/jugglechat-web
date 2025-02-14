@@ -4,6 +4,7 @@ import utils from "../common/utils";
 import common from "../common/common";
 import emitter from "../common/emmit";
 import Asider from "./aside.vue";
+import Avatar from "./avatar.vue";
 
 import AsiderUserUpdate from "./aside-user-update.vue";
 import AsiderUserConfig from "./aside-user-config.vue";
@@ -99,7 +100,12 @@ emitter.$on(EVENT_NAME.ON_USER_INFO_UPDATE, ({ user }) => {
           <li class="jg-card jg-card-userinfo">
             <ul class="jg-ul">
               <li class="jg-li jg-card-li-userinfo">
-                <div class="tyn-avatar jg-header-user-avatar" :style="{ 'background-image': 'url(' + state.user.portrait + ')' }"></div>
+                <Avatar
+                  :cls="'tyn-ss-avatar jg-header-user-avatar'"
+                  :avatar="state.user.portrait"
+                  :name="state.user.name || state.user.id">
+                </Avatar>
+                <!-- <div class="tyn-avatar jg-header-user-avatar" :style="{ 'background-image': 'url(' + state.user.portrait + ')' }"></div> -->
                 <div class="jg-header-user-name">{{ state.user.name }}</div>
               </li>
               <li class="jg-li">
