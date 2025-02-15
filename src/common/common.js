@@ -350,6 +350,29 @@ function mentionShortFormat(message){
 	content = utils.templateFormat(content, memberMap);
 	return content;
 }
+function mentionToText(message){
+  let juggle = im.getCurrent();
+  let { MentionType } = juggle;
+	
+	let { mentionInfo, content: { content } } = message;
+	content = purify(content);
+	if(!mentionInfo){
+		return content;
+	}
+	
+	let { mentionType, members } = mentionInfo;
+	
+	let isAll = utils.isEqual(MentionType.ALL, mentionType);
+	if(isAll ||  utils.isEqual(MentionType.ALL_SOMEONE, mentionType)){
+		content = utils.templateFormat(content, { all: `@所有人 ` });
+	}
+	let memberMap = {};
+	utils.forEach(members, (member) => {
+		memberMap[member.id] = `@${member.name} `;
+	});
+	content = utils.templateFormat(content, memberMap);
+	return content;
+}
 export default {
  isElementTop,
  getAvatar,
@@ -368,4 +391,5 @@ export default {
  formatMarkdown,
  purify,
  mentionShortFormat,
+ mentionToText,
 }

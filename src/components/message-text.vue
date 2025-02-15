@@ -33,8 +33,8 @@ watch(() => props.message, (msg) => {
 let context = getCurrentInstance();
 
 function onCopy(){
-  let { content } = props.message;
-  Clipboard.copy(content.content, utils.noop, utils.noop);
+  let content = common.mentionToText(props.message)
+  Clipboard.copy(content, utils.noop, utils.noop);
   context.proxy.$toast({
     text: `已复制`,
     icon: 'success'
