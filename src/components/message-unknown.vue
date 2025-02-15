@@ -6,7 +6,7 @@ const props = defineProps(['message']);
 </script>
 
 <template>
-  <div class="tyn-reply-avatar">
+  <!-- <div class="tyn-reply-avatar">
  <div class="tyn-media">
       <Avatar 
         :cls="'tyn-size-md jg-size-md '"
@@ -20,5 +20,10 @@ const props = defineProps(['message']);
     <div class="tyn-reply-bubble">
       <div class="tyn-reply-text">[UnknownMessage]</div>
     </div>
+  </div> -->
+  <div class="tyn-reply-separator">
+    <span class="tyn-separator-item">
+      消息暂不支持
+    </span>
   </div>
 </template>

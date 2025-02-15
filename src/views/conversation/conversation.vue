@@ -814,6 +814,9 @@ function onBanGroup(isMute){
   state.isShowGroupMute = isMute;
   state.group.group_management.group_mute = isMute;
 }
+function isUnknown(message){
+  message.isUnknown = true;
+}
 function onAskAI(){
   if(state.isAsking){
     return;
@@ -925,7 +928,7 @@ watch(() => state.content, (val) => {
           <RecallMessage v-else-if="message.name == MessageType.RECALL_INFO" :message="message"></RecallMessage>
           <GroupNtfMessage v-else-if="message.name == MSG_NAME.GROUP_NTF" :message="message"></GroupNtfMessage>
           <FriendNtfMessage v-else-if="message.name == MSG_NAME.FRIEND_NTF" :message="message"></FriendNtfMessage>
-          <div class="tny-conent-msg" v-else>
+          <div class="tny-conent-msg" v-else :class="{'jg-notify-message': message.isUnknown}">
             <span class="tyn-transfer wr" v-if="state.isShowTransfer" :class="{'wr-success-square': message.isSelected, 'wr-square': !message.isSelected}" @click="onSelected(message)"></span>
             <div class="tyn-reply-item" :class="[message.isSender ? 'outgoing' : 'ingoing', state.isShowTransfer ? 'tny-message' : '']"  @click="onSelected(message)">
               
@@ -980,7 +983,7 @@ watch(() => state.content, (val) => {
               <Call1v1FinishedMessage v-else-if="utils.isEqual(message.name, MessageType.CALL_1V1_FINISHED)" :message="message"></Call1v1FinishedMessage>
               <StreamText v-else-if="utils.isEqual(message.name, MessageType.STREAM_TEXT)" :message="message"></StreamText>
               <ContactCard v-else-if="utils.isEqual(message.name, MSG_NAME.CONTACT_CARD)" :message="message"></ContactCard>
-              <Known v-else :message="message"></Known>
+              <Known v-else :message="message" :is-unknow="isUnknown(message)"></Known>
             </div>
           </div>
         </div>

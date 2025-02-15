@@ -125,3 +125,6 @@
 .jg-warn{
   color: #FF0000;
 }
+.jg-notify-message .tyn-reply-item{
+  flex-direction: column;
+}
