@@ -22,6 +22,19 @@ dl {
   background-position: 54%; */
   position: relative;
 }
+/* .tyn-root::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-position: top right;
+  background-size: 510px auto;
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+  background: linear-gradient(136deg, #f5f5f7, #f5f5f7);
+} */
 .tyn-root::after{
   content: "";
   position: absolute;
@@ -926,6 +939,14 @@ dl {
   padding: 0 1rem;
   line-height: 14px;
   display: inline-block;
+
+  /* margin: 0 2rem;
+  background: #a6a6a626;
+  color: #424242b3;
+  border-radius: 10px;
+  padding: 0 1rem;
+  line-height: 14px;
+  display: inline-block; */
 }
 .tyn-reply-avatar {
   margin-right: var(--avatar-gap);
