@@ -641,7 +641,7 @@ function onReply(message){
   messageInput.focus();
 }
 function onReaction(reaction){
-  let { text, message } = reaction;
+  let { emoji: text, message } = reaction;
   let { conversationId, conversationType } = state.currentConversation;
   let { messageId } = message;
 

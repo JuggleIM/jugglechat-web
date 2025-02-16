@@ -14,7 +14,7 @@ function isElementTop(message){
     messageNode = document.querySelector(`div[messageid="${message.tid}"]`);
   }
   let num = chatNode.offsetTop-messageNode.getBoundingClientRect().bottom;
-  return num > -200;
+  return num > -300;
 }
 function isConversationElementTop(conversation){
   var chatNode = document.querySelector('.tyn-aside-list');

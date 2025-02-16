@@ -1423,14 +1423,26 @@
   justify-content: center;
   align-items: center;
   margin: 2px 4px 0 0;
-  padding: 0 8px;
-  border-radius: 16px;
+  padding: 2px 12px;
+  border-radius: 10px;
   font-size: 12px;
   cursor: pointer;
 }
 .jg-reaction-emoji{
   font-size: 14px;
   animation: qr-show 300ms ease-in-out forwards;
+  display: flex;
+  align-items: center
+}
+.jg-reaction-emoji-img{
+  height: 1rem;
+  width: 1rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.jg-reaction-emoji-content{
+  font-size: 1rem;
+  line-height: 1rem;
 }
 .jg-reaction-emoji::after{
   content: "|";
@@ -1452,10 +1464,10 @@
 }
 .jg-reaction-bottom{
   top: unset !important;
-  bottom: -120px;
+  bottom: -17rem;
 }
 .jg-reaction-top{
-  top: -110px !important;
+  top: -16rem !important;
   bottom: unset !important;
 }
 
