@@ -2565,6 +2565,7 @@
   position: absolute;
   top: -2px;
   right: 6px;
+  z-index: 1055;
 }
 .jg-aside-group-body .jg-tools{
   height: 2rem;

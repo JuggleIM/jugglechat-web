@@ -4,6 +4,7 @@ import utils from "../common/utils";
 import common from "../common/common";
 import emitter from "../common/emmit";
 import Asider from "./aside.vue";
+import Avatar from "./avatar.vue";
 import im from "../common/im";
 import { User, Group, Friend } from "../services/index";
 import { RESPONSE, STORAGE, GROUP_AVATAR, EVENT_NAME } from "../common/enum";
@@ -125,9 +126,9 @@ function onSelected(item) {
         <li v-for="item in state.friends" @click="onSelected(item)" class="tyn-media-item">
           <span class="wr tyn-tfcontact-s"
             :class="[item.isTransferChecked ? 'wr-success-square tyn-contact-checked' : 'wr-square', item.disabled ? 'wr-disabled' : '']"></span>
-            <div class="tyn-media tyn-size-md tyn-conver-avatar"
-              :style="{ 'background-image': 'url(' + item.avatar + ')' }">
-            </div>
+
+            <Avatar :cls="'tyn-size-md jg-size-md'" :avatar="item.avatar" :name="item.nickname"></Avatar>
+
             <div class="tyn-media-col">
               <div class="tyn-media-row">
                 <h6 class="name">{{ item.nickname }}</h6>
