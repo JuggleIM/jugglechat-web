@@ -419,13 +419,13 @@ function onSend() {
       message.streamMsg = { isEnd: false, streams: [] };
       state.messages.unshift(message);
     }
-  }).then(({ sentTime, messageId }) => {
+  }).then(({ sentTime, messageId, messageIndex }) => {
     utils.extend(msg, { sentTime, messageId });
     isSending = false;
     let index = utils.find(state.messages, (m) => { return utils.isEqual(m.tid, msg.tid)});
     let _msg = state.messages[index];
     if(_msg){
-      utils.extend(_msg, { sentTime, messageId, sentState: SentState.SUCCESS })
+      utils.extend(_msg, { sentTime, messageId, sentState: SentState.SUCCESS, messageIndex })
     }
     console.log('send successfully', msg);
     onCancelReply();
