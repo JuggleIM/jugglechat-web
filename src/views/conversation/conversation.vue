@@ -13,6 +13,7 @@ import im from "../../common/im";
 
 import Perch from "../../components/perch.vue";
 import Text from '../../components/message-text.vue';
+import Staker from '../../components/message-staker.vue';
 import StreamText from '../../components/message-stream-text.vue';
 import File from '../../components/message-file.vue';
 import ImageMessage from '../../components/message-image.vue';
@@ -682,8 +683,14 @@ function onPaste(){
 function onShowEmoji(isShow){
   state.isShowEmoji = isShow;
 }
+function onOverShowEmoji(isShow){
+  if(utils.isMobile()){
+    return;
+  }
+  state.isShowEmoji = isShow;
+}
 function onChoiceEmoji(emoji){
-  state.content += emoji.text;
+  state.content += emoji.emoji;
   inputFocus();
 }
 function onShowImgSender(img){
@@ -863,6 +870,12 @@ watch(() => state.content, (val) => {
   }
 });
 
+function isStaker(message){
+  let isText = utils.isEqual(message.name, MessageType.TEXT);
+  let { referMsg } = message;
+  let isRefer = referMsg && referMsg.name;
+  return isText && common.isShowStaker(message) && !isRefer;
+}
 </script>
 <template>
   <div class="tyn-main tyn-chat-content aside-collapsed"
@@ -932,7 +945,15 @@ watch(() => state.content, (val) => {
             <span class="tyn-transfer wr" v-if="state.isShowTransfer" :class="{'wr-success-square': message.isSelected, 'wr-square': !message.isSelected}" @click="onSelected(message)"></span>
             <div class="tyn-reply-item" :class="[message.isSender ? 'outgoing' : 'ingoing', state.isShowTransfer ? 'tny-message' : '']"  @click="onSelected(message)">
               
-              <Text v-if="utils.isEqual(message.name, MessageType.TEXT)" :message="message" 
+              <Staker v-if="isStaker(message)" :message="message"
+                @onrecall="onRecall"
+                @onreply="onReply" 
+                @onreaction="onReaction" 
+                @onresend="onResendMessage"
+                @onfav="onFav"
+                @onpinned="onPinned">
+              </Staker>
+              <Text v-else-if="utils.isEqual(message.name, MessageType.TEXT)" :message="message" 
                 @onrecall="onRecall"
                 @onmodify="onModifyText" 
                 @ontransfer="onShowTransfer" 
@@ -1005,7 +1026,7 @@ watch(() => state.content, (val) => {
           @keydown.up.prevent="onInputUp" @keydown.down.prevent="onInputDown" @paste="onPaste" placeholder="Write a message" ref="messageInput"/>
         <ul class="tyn-list-inline me-n2 my-1">
           <li class="d-sm-block">
-            <div type="file" class="btn btn-icon btn-light btn-md btn-pill wr wr-smile j-pointer" @click="onShowEmoji(true)" ></div>
+            <div type="file" class="btn btn-icon btn-light btn-md btn-pill wr wr-smile j-pointer" @click="onShowEmoji(true)" @mouseover="onOverShowEmoji(true)" ></div>
           </li>
           <li class="d-sm-block tyn-input-block">
             <button :class="{'tyn-chat-has-content': state.content.length > 0}" class="btn btn-icon btn-light btn-md btn-pill  wr wr-send j-pointer" @click="onSend()"></button>

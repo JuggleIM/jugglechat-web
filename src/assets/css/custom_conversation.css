@@ -128,3 +128,18 @@
 .jg-notify-message .tyn-reply-item{
   flex-direction: column;
 }
+.jg-msg-emoji-box{
+  display: flex;
+}
+.jg-msg-emoji{
+  display: flex;
+}
+.jg-msg-emoji-img{
+  height: 6rem;
+  width: 6rem;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.jg-msg-emoji-content{
+  font-size: 4rem;
+}

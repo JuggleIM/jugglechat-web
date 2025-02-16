@@ -352,14 +352,14 @@
 }
 .tyn-emoji-pn{
   position: absolute;
-  width: 470px;
+  width: 400px;
   top: 60px;
   right: 0;
   padding: 10px;
   z-index: 1201;
 }
 .tyn-emoji-pn.show-aside{
-  top: -152px;
+  top: -18rem;
   height: auto;
 }
 
@@ -373,8 +373,19 @@
   box-shadow: #0000002e 0 3px 12px;
 }
 .emoji-item{
-  font-size: 1.5rem;
-  margin: 4px;
+  font-size: 2rem;
+  margin: 2px;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  justify-content: center;
+  float: left;
+  border-radius: 8px;
+  user-select: none;
+}
+.emoji-item:hover{
+  background-color: #FFF;
+  cursor: pointer;
 }
 .transfer-icon{
   position: relative;
@@ -1158,10 +1169,11 @@
 
 
 .emojis__grid {
-  display: flex;
+  /* display: flex; */
   flex-wrap: wrap;
-  margin: 0 auto;
-  padding-bottom: 4px;
+  overflow-y: auto;
+  height: 16rem;
+  margin: 8px;
 }
 
 .emoji {

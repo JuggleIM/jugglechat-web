@@ -4,6 +4,8 @@ import html2canvas from 'html2canvas';
 import im from './im';
 import { IGNORE_CONVERSATIONS, FILE_TYPE } from "../common/enum"
 import  MarkdownIt from 'markdown-it';
+import { emojis } from "./emoji";
+import Graphemer from "graphemer";
 
 function isElementTop(message){
   var chatNode = document.querySelector('.tyn-chat-body');
@@ -373,6 +375,37 @@ function mentionToText(message){
 	content = utils.templateFormat(content, memberMap);
 	return content;
 }
+var splitter = new Graphemer();
+function isShowStaker(message){
+	let { content: { content } } = message;
+	let list = splitter.splitGraphemes(content);
+	let showCount = 2;
+	let matchCount = 0;
+	let isShow = false;
+	if(list.length > showCount){
+		return isShow;
+	}
+	utils.forEach(list, (str) => {
+		let isMatch = utils.isHighInclude(emojis, (emoji) => {
+			return utils.isEqual(str, emoji.emoji);
+		})
+		if(isMatch || isEmoji(str)){
+			matchCount += 1;
+		}
+	});
+	return matchCount > 0 && matchCount <= showCount;
+}
+function splitGraphemes(content){
+	return splitter.splitGraphemes(content)
+}
+function isEmoji(char) {
+  let code = char.codePointAt(0);
+  return (code >= 0x1F600 && code <= 0x1F64F) || // 常用表情符号范围
+         (code >= 0x2600 && code <= 0x26FF) || // 杂项符号范围
+         (code >= 0x2700 && code <= 0x27BF) || // 标点符号范围
+         (code >= 0xFE00 && code <= 0xFE0F) || // 变体选择器范围
+         (code >= 0x1F900 && code <= 0x1F9FF); // 补充表情符号范围
+}
 export default {
  isElementTop,
  getAvatar,
@@ -392,4 +425,6 @@ export default {
  purify,
  mentionShortFormat,
  mentionToText,
+ isShowStaker,
+ splitGraphemes,
 }

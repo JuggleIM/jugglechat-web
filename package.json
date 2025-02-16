@@ -13,6 +13,7 @@
   "dependencies": {
     "clipboard.js": "^1.0.1",
     "event-source-polyfill": "^1.0.31",
+    "graphemer": "^1.4.0",
     "html2canvas": "^1.4.1",
     "jugglechat-websdk": "^1.7.12",
     "markdown-it": "^13.0.2",

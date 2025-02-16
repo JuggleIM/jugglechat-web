@@ -1016,6 +1016,7 @@ dl {
   top: 11px;
   color: #effcde;
 }
+.outgoing .tyn-reply-media, 
 .outgoing .tyn-reply-text {
   color: #111b21;
   background: #d9fdd3;
