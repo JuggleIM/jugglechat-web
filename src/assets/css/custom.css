@@ -3,7 +3,6 @@
 @import './custom_header.css';
 @import './custom_conversation.css';
 @import './custom_contacts.css';
-@import './markdown.min.css';
 
 .tyn-root {
   --appbar-height: 48px;
@@ -96,7 +95,7 @@
   bottom: -4px;
 }
 .tyn-reply-text .jg-message-senttime{
-  right: -8px;
+  right: 0px;
 }
 .tyn-reply-media,
 .tyn-reply-file{
@@ -2835,4 +2834,16 @@
 .jg-aside-uagreement-body .content{
   height: 90vh;
   width: 100%;
+}
+.markdown-body{
+  padding: 0.5rem;
+}
+.markdown-body p{
+  margin-bottom: 0;
+}
+.markdown-body blockquote, .markdown-body details, .markdown-body dl, .markdown-body ol, .markdown-body p, .markdown-body pre, .markdown-body table, .markdown-body ul{
+  margin-bottom: 0;
+}
+.markdown-body ol, .markdown-body ul{
+  padding: 0;
 }

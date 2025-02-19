@@ -93,7 +93,7 @@ function getContent(content){
   // content = content.replace(REG_EXP.LINK, (current, match) => {
   //   return `<a href="${match}" target="_blank" >${match}</a>`;
   // });
-  return common.mentionShortFormat(props.message);
+  return common.formatMarkdown(common.mentionShortFormat(props.message));
 }
 function onShowReadDetail(isShow) {
   if (!messageUtils.isGroup(props.message)) {
@@ -153,9 +153,9 @@ function onResend(){
         </div>
         <span class="small ms-2 text-warning" v-if="state.errorMsg">{{ state.errorMsg }}</span>
       </div>
-      <div class="tyn-reply-text wr" v-else v-longpress="onClickRight" @click.right.prevent="onClickRight" @click.prevent="onShowEmojiReaction(true)">
+      <div class="markdown-body tyn-reply-text wr" v-else v-longpress="onClickRight" @click.right.prevent="onClickRight" @click.prevent="onShowEmojiReaction(true)">
         <ReplyMessage  :message="props.message.referMsg"></ReplyMessage>
-        <span v-html="getContent(props.message.content.content)"></span>
+        <span class="" v-html="getContent(props.message.content.content)"></span>
         <div class="jg-translate" v-if="props.message.translation" v-html="getContent(props.message.translation)"></div>
         <span class="tyn-text-modify" v-if="props.message.isUpdated">（已修改）</span>
         
