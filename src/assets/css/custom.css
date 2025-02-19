@@ -1675,6 +1675,9 @@
 .jg-conver-group-modal .modal-body{
   height: 600px;
 }
+.jg-conver-group-modal .modal-content{
+  width: 400px;
+}
 /* Conversation Group End */
 
 /* Conversation Group Member Start */

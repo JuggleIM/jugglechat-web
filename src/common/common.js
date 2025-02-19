@@ -406,6 +406,12 @@ function isEmoji(char) {
          (code >= 0xFE00 && code <= 0xFE0F) || // 变体选择器范围
          (code >= 0x1F900 && code <= 0x1F9FF); // 补充表情符号范围
 }
+function isGroup(message) {
+  let juggle = im.getCurrent();
+  let { ConversationType } = juggle;
+  return utils.isEqual(message.conversationType, ConversationType.GROUP);
+}
+
 export default {
  isElementTop,
  getAvatar,
@@ -427,4 +433,5 @@ export default {
  mentionToText,
  isShowStaker,
  splitGraphemes,
+ isGroup,
 }

@@ -93,7 +93,7 @@ watch(() => props.isShow, async () => {
             <li v-for="(item, index) in state.list" class="jg-conver-modal-group">
               <div class="jg-conver-group-name" :class="{ 'wr-asterisk jg-text-danger': item.name.length == 0 }">
                 <span class="wr wr-cir-remove jg-text-danger" :class="{'jg-text-disable': item.isInner}" @click="onRemove(index)"></span>
-                <input type="text" class="form-control" placeholder="请输入分组名称（回车保存）" :disabled="item.isInner" v-model="item.name" @keydown.enter="onSave(index)">
+                <input type="text" class="form-control" placeholder="请输入分组名称（回车保存）" :disabled="item.isInner" v-model="item.name" @blur="onSave(index)" @keydown.enter="onSave(index)">
               </div>
               <div class="jg-conver-group-desc" :class="{'jg-conver-group-desc-custom': !item.isInner}">{{ item.isInner ? '系统分组' : '自定义分组' }}</div>
             </li>
@@ -102,11 +102,12 @@ watch(() => props.isShow, async () => {
             <!-- <li>
               <button class="btn btn-sm btn-success" @click="onConfirm()">确认</button>
             </li> -->
-            <li>
+            <!-- <li>
               <button class="btn btn-sm btn-light" @click="onCancel()">取消</button>
-            </li>
+            </li> -->
           </ul>
         </div>
+        <button @click="onCancel()" class="btn btn-md btn-icon btn-pill btn-white shadow position-absolute top-0 end-0 mt-n3 me-n3 wr wr-close"></button>
       </div>
     </div>
     <div class="modal-backdrop fade" :class="{ 'show': props.isShow }"></div>
