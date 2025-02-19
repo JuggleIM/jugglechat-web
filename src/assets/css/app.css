@@ -616,6 +616,7 @@ dl {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 12px;
+  color: #000000;
 }
 .tyn-media-col .name .username {
   font-size: 70%;
@@ -653,8 +654,7 @@ dl {
 }
 .tyn-contact .tyn-media-col .meta {
   font-size: 0.825rem;
-  color: var(--media-text-light);
-  font-weight: 700;
+  color: #000;
 }
 .tyn-media-col .anchor {
   font-size: 0.625rem;

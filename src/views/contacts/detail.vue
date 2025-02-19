@@ -6,6 +6,7 @@ import { CONTACT_TYPE, FRIEND_APPLY_STATUS, RESPONSE, EVENT_NAME } from "../../c
 import { Friend } from "../../services";
 import { reactive, getCurrentInstance } from "vue";
 import emitter from "../../common/emmit";
+import Avatar from "../../components/avatar.vue";
 
 let { ConversationType } = im.getCurrent();
 const router = useRouter();
@@ -73,13 +74,13 @@ function onRemoveFriend(){
     <div class="contact-content">
       <div class="tyn-chat-head" v-if="!utils.isEmpty(props.current)">
         <div class="tyn-media-group">
-          <div class="tyn-media tyn-size-3xl tyn-conver-avatar" :style="{ 'background-image': 'url('+props.current.avatar+')' }"></div>
+          <Avatar :cls="'jg-size-rg tyn-conver-avatar'" :avatar="utils.isEqual(props.current.type, CONTACT_TYPE.GROUP) ? '' : props.current.avatar" :name="props.current.name || props.current.user.nickname"></Avatar>
           <div class="tyn-media-col" v-if="utils.isEqual(props.current.type, CONTACT_TYPE.NEW_FRIEND)">
             <div class="tyn-media-row">
               <h3 class="name">{{ props.current.user.nickname }}</h3>
             </div>
             <div class="tyn-media-row has-dot-sap">
-              <span class="meta">ID: {{ props.current.user.user_id }}</span>
+              <span class="meta">ID: @{{ props.current.user.user_id }}</span>
             </div>
             <div class="tyn-media-row has-dot-sap" v-if="props.current.phone">
               <span class="meta">手机号: {{ props.current.phone }}</span>
@@ -90,7 +91,7 @@ function onRemoveFriend(){
               <h3 class="name">{{ props.current.name }}</h3>
             </div>
             <div class="tyn-media-row has-dot-sap">
-              <span class="meta">ID: {{ props.current.id }}</span>
+              <span class="meta">ID: @{{ props.current.id }}</span>
             </div>
             <div class="tyn-media-row has-dot-sap" v-if="props.current.phone">
               <span class="meta">手机号: {{ props.current.phone }}</span>

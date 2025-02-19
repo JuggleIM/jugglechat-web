@@ -2094,6 +2094,7 @@
 .jg-warn-bg{
   background-color: #ef2323;
   color: #FFF;
+  border: 0;
 }
 .jg-warn-letter{
   color: #ef2323;

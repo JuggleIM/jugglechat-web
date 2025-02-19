@@ -4,6 +4,7 @@ import ContactDetail from "./detail.vue";
 import AsiderContactDetail from "../../components/aside-contact-detail.vue";
 import { useRouter } from "vue-router";
 import Dropmenu from "./dropmenu.vue";
+import Avatar from "../../components/avatar.vue";
 import { reactive, getCurrentInstance, watch } from "vue";
 import { CONTACT_TAB_TYPE, RESPONSE, EVENT_NAME, CONTACT_TYPE, FRIEND_APPLY_STATUS, IGNORE_CONVERSATIONS, SYS_CONVERSATION_FRIEND }  from "../../common/enum";
 
@@ -274,7 +275,7 @@ getFriends();
                 :class="{'active': item.isSelected}" 
                 @click="onShowProfile(item)">
                 <div class="tyn-media-group">
-                  <div class="tyn-media tyn-size-rg contact-avatar" :style="{'background-image': 'url(' + item.avatar +')'}"></div>
+                  <Avatar :cls="'tyn-size-rg contact-avatar jg-size-md'" :avatar="utils.isEqual(item.type, CONTACT_TYPE.GROUP) ? '' : item.avatar" :name="item.user && item.user.nickname || item.name"></Avatar>
                   <div class="tyn-media-col">
                     <div class="tyn-media-row"><h6 class="name">{{ item.name }}</h6></div>
                   </div>
