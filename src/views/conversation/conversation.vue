@@ -92,6 +92,22 @@ juggle.once(Event.MESSAGE_RECEIVED, (message) => {
       return utils.isEqual(msg.messageId, message.messageId)
     });
     message.streamMsg = { isEnd: false, streams: [] };
+    let isText = utils.isEqual(message.name, MessageType.TEXT);
+    let { content: { extra } } = message;
+    if(isText && extra){
+      let extMap = utils.parse(extra) || {};
+      let stream_msg_id = extMap.stream_msg_id;
+      let msgIndex = utils.find(state.messages, (msg) => {
+        return utils.isEqual(msg.messageId, stream_msg_id)
+      });
+      if(msgIndex > -1){
+        let _msg = state.messages[msgIndex];
+        let streams = message.content.content;
+        let isEnd = true;
+        _msg.streamMsg = { isEnd, streams };
+        return;
+      }
+    }
     if(index == -1){
       state.messages.unshift(message);
     }else{
@@ -100,7 +116,7 @@ juggle.once(Event.MESSAGE_RECEIVED, (message) => {
     scrollBottom();
     conversationTools.readMessage([message]);
     conversationTools.clearUnreadCount(message)
-    let isText = utils.isEqual(message.name, MessageType.TEXT);
+    
     if(isText && !message.isSender){
       conversationTools.translate(state, [message]);
     }
@@ -113,19 +129,19 @@ juggle.once(Event.STREAM_APPENDED, ({ message }) => {
     if(utils.isEmpty(msg)){
       return;
     }
-    let { streams } = message;
-    utils.extend(msg.streamMsg, { isEnd: false, streams })
+    let { content: { content } } = message;
+    utils.extend(msg.streamMsg, { isEnd: false, streams: content })
   }
 });
-juggle.once(Event.STREAM_COMPLETED, ({ message }) => {
-  if (conversationTools.isSameConversation(message, state)) {
-    let msg = findMsgById(message) || {};
-    if(utils.isEmpty(msg)){
-      return;
-    }
-    utils.extend(msg.streamMsg, { isEnd: true, streams: [] })
-  }
-});
+// juggle.once(Event.STREAM_COMPLETED, ({ message }) => {
+//   if (conversationTools.isSameConversation(message, state)) {
+//     let msg = findMsgById(message) || {};
+//     if(utils.isEmpty(msg)){
+//       return;
+//     }
+//     utils.extend(msg.streamMsg, { isEnd: true, streams: [] })
+//   }
+// });
 function findMsgById(msg){
   let { messageId } = msg;
   let index = utils.find(state.messages, (_msg) => {
