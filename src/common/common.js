@@ -281,7 +281,7 @@ function formatTags(tags){
     if(!tagIcons[tag.id]){
       let icon = 'wr-mg-tag';
       let isInner = tag.type > 0;
-      utils.extend(tag, { icon, isActive: false, isInner });
+      utils.extend(tag, { icon, isActive: false, isInner, type: tag.type});
       groups.push(tag);
     }
   });

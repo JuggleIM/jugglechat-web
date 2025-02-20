@@ -80,7 +80,9 @@ juggle.once(Event.TAG_CHANGED, (notify) => {
       return utils.isEqual(group.id, tag.id);
     });
     if(index > -1){
-      groups.splice(index, 1, tag);
+      let _tag = groups[index];
+      utils.extend(_tag, tag);
+      // groups.splice(index, 1, tag);
     }else{
       groups.push(tag);
     }

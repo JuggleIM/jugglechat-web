@@ -49,7 +49,7 @@ function getConversations(isFirst = false, callback = utils.noop) {
   juggle.getConversations(params).then(result => {
     let { conversations: list } = result;
     let _list = common.filterIgnoreConversations(list);
-    state.conversations = conversations.concat();
+    state.conversations = conversations.concat(_list);
     callback();
   });
 }
