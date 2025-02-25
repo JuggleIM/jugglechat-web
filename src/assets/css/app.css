@@ -1015,13 +1015,13 @@ dl {
   border-radius: 7.5px;
 }
 .tyn-reply-text::before{
-  content: '';
+  /* content: '';
   position: absolute;
   top: 0;
   left: -12px;
   width: 20px;
   height: 20px;
-  background: linear-gradient(239deg, #FFF 0%, #FFF 50%, transparent 50%, transparent);
+  background: linear-gradient(239deg, #FFF 0%, #FFF 50%, transparent 50%, transparent); */
 }
 .wr-bubble-a::after,
 .wr-bubble-b::before{
@@ -1043,7 +1043,7 @@ dl {
   background: #d9fdd3;
 }
 .outgoing .tyn-reply-text::before{
-  --chat: #d9fdd3;
+  /* --chat: #d9fdd3;
   content: '';
   position: absolute;
   top: 0;
@@ -1051,7 +1051,7 @@ dl {
   left: unset;
   width: 20px;
   height: 20px;
-  background: linear-gradient(113deg, var(--chat) 0%, var(--chat) 50%, transparent 50%, transparent);
+  background: linear-gradient(113deg, var(--chat) 0%, var(--chat) 50%, transparent 50%, transparent); */
 }
 .tyn-reply-link {
   display: flex;

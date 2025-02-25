@@ -81,7 +81,7 @@
   justify-content: center;
   background-image: linear-gradient(#ffffff -300%, var(--color-user));
   color: #FFF;
-  border-radius: 50%;
+  border-radius: 10%;
   font-weight: 600;
 }
 .jg-peer-color-0{
