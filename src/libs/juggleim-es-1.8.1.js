@@ -1,5 +1,5 @@
 /*
-* JuggleIM.js v1.8.0
+* JuggleIM.js v1.8.1
 * (c) 2022-2025 JuggleIM
 * Released under the MIT License.
 */
@@ -6167,6 +6167,10 @@ const $root = ($protobuf.roots["default"] || ($protobuf.roots["default"] = new $
           timestamp: {
             type: "int64",
             id: 3
+          },
+          userInfo: {
+            type: "UserInfo",
+            id: 4
           }
         }
       },
@@ -9222,12 +9226,19 @@ function msgFormat(msg, {
   if (msgExtSet) {
     msgExtSet = utils.map(msgExtSet, item => {
       let {
-        key
+        key,
+        value,
+        timestamp,
+        userInfo
       } = item;
-      item.key = unescape(key);
-      return item;
+      let user = common.formatUser(userInfo);
+      return {
+        key,
+        value,
+        user,
+        timestamp
+      };
     });
-    msgExtSet = utils.clone(msgExtSet);
     reactions = utils.groupBy(msgExtSet, ['key']);
   }
   converTags = converTags || [];
@@ -9564,14 +9575,24 @@ function msgFormat(msg, {
         is_del,
         timestamp,
         key,
-        value
+        value,
+        user
       } = item;
       key = unescape(key);
+      let _user = {};
+      if (user) {
+        _user = {
+          id: user.user_id,
+          name: user.nickname,
+          portrait: user.user_portrait
+        };
+      }
       return {
         isRemove: Boolean(is_del),
         key,
         value,
-        timestamp
+        timestamp,
+        user: _user
       };
     });
     content = {
@@ -11272,7 +11293,7 @@ function Counter (_config = {}) {
   };
 }
 
-let VERSION = '1.8.0';
+let VERSION = '1.8.1';
 
 var WebWS = WebSocket;
 
@@ -15138,16 +15159,11 @@ function Message$1 (io, emitter, logger) {
         return reject(error);
       }
       let {
-        reactionId
-      } = message;
-      reactionId = escape(reactionId);
-      let {
         id: userId
       } = io.getCurrentUser();
       let data = {
         topic: COMMAND_TOPICS.ADD_MSG_REACTION,
         ...message,
-        reactionId,
         userId
       };
       io.sendCommand(SIGNAL_CMD.QUERY, data, result => {
@@ -15180,14 +15196,9 @@ function Message$1 (io, emitter, logger) {
       let {
         id: userId
       } = io.getCurrentUser();
-      let {
-        reactionId
-      } = message;
-      reactionId = escape(reactionId);
       let data = {
         topic: COMMAND_TOPICS.REMOVE_MSG_REACTION,
         ...message,
-        reactionId,
         userId
       };
       io.sendCommand(SIGNAL_CMD.QUERY, data, result => {
@@ -15966,11 +15977,13 @@ function Chatroom$1 (io, emitter, logger) {
         code
       });
       if (utils.isEqual(ErrorType.COMMAND_SUCCESS.code, code)) {
-        chatroomCacher$1.set(chatroom.id, {
-          isJoined: true
-        });
+        let chatroomResult = chatroomCacher$1.get(chatroom.id);
+        let syncMsgTime = chatroomResult.syncMsgTime || 0;
         let isNotSync = utils.isEqual(0, count);
-        let _time = isNotSync ? timestamp : 0;
+        let _time = syncMsgTime;
+        if (isNotSync && utils.isEqual(syncMsgTime, 0)) {
+          _time = timestamp;
+        }
         let syncers = [{
           name: SIGNAL_NAME.S_NTF,
           msg: {
@@ -15988,6 +16001,9 @@ function Chatroom$1 (io, emitter, logger) {
             targetId: id
           }
         }];
+        chatroomCacher$1.set(chatroom.id, {
+          isJoined: true
+        });
         io.sync(syncers);
         return callbacks.success();
       }

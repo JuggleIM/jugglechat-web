@@ -1,4 +1,4 @@
-import JuggleChat from "../libs/juggleim-es-1.8.0";
+import JuggleChat from "../libs/juggleim-es-1.8.1";
 import JuggleCall from "../libs/jugglecall-es-1.0.0";
 
 // import JuggleChat from "jugglechat-websdk";
