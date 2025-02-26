@@ -1498,6 +1498,7 @@
 }
 .conver-dot{
   font-size: 10px;
+  z-index: 99;
 }
 .jg-conver-mute{
   color: #0000003b;

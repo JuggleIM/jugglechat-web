@@ -93,6 +93,16 @@ function getContent(content){
   // content = content.replace(REG_EXP.LINK, (current, match) => {
   //   return `<a href="${match}" target="_blank" >${match}</a>`;
   // });
+  let { mentionInfo } = props.message;
+  if(!mentionInfo){
+    mentionInfo = { mentionType: -1 };
+  }
+  let isMention = mentionInfo.mentionType > 0;
+  if(isMention){
+    let content = common.mentionShortFormat(message)
+    let reg = new RegExp('\n', 'g');
+    return content.replace(reg, '<br/>');	
+  }
   return common.formatMarkdown(common.mentionShortFormat(props.message));
 }
 function onShowReadDetail(isShow) {
