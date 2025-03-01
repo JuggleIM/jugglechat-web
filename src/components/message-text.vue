@@ -93,7 +93,8 @@ function getContent(content){
   // content = content.replace(REG_EXP.LINK, (current, match) => {
   //   return `<a href="${match}" target="_blank" >${match}</a>`;
   // });
-  let { mentionInfo } = props.message;
+  let message = props.message;
+  let { mentionInfo } = message;
   if(!mentionInfo){
     mentionInfo = { mentionType: -1 };
   }
