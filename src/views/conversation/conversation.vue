@@ -353,8 +353,14 @@ function onMentionSelected(index) {
   content += `${member.name} `
   utils.extend(state, { isShowMention: false, selectMentionIndex: 0, mentions, content });
 }
+
 let isSending = false;
+let isComposing = false;
 function onSend() {
+  if(isComposing){
+    return;
+  }
+  isComposing = false;
   let { selectMentionIndex, mentions, isShowMention, content } = state
   if (utils.isEmpty(content)) {
     return;
@@ -455,6 +461,13 @@ function onSend() {
     context.proxy.$toast({ text: `消息发送失败: ${error.code}`, icon: 'error' });
     isSending = false;
   });
+}
+
+function onCompositionStart() {
+  isComposing = true;
+}
+function  onCompositionEnd() {
+  isComposing = false;
 }
 function onInputBlur() {
   
@@ -1053,14 +1066,16 @@ function isStaker(message){
               @change="onFileChange" />
           </li>
         </ul>
-        <input  class="tyn-chat-form-input" v-model="state.content" @keydown.enter="onSend()" :disabled="state.isShowGroupMute || state.isAsking" @keydown.esc="onInputEsc"
-          @keydown.up.prevent="onInputUp" @keydown.down.prevent="onInputDown" @paste="onPaste" placeholder="Write a message" ref="messageInput"/>
+        <input  class="tyn-chat-form-input"
+          @compositionstart="onCompositionStart" @compositionend="onCompositionEnd"
+          v-model="state.content" @keydown.enter="onSend" :disabled="state.isShowGroupMute || state.isAsking" @keydown.esc="onInputEsc"
+          @keydown.up="onInputUp" @keydown.down="onInputDown" @paste="onPaste" placeholder="Write a message" ref="messageInput"/>
         <ul class="tyn-list-inline me-n2 my-1">
           <li class="d-sm-block">
             <div type="file" class="btn btn-icon btn-light btn-md btn-pill wr wr-smile j-pointer" @click="onShowEmoji(true)" @mouseover="onOverShowEmoji(true)" ></div>
           </li>
           <li class="d-sm-block tyn-input-block">
-            <button :class="{'tyn-chat-has-content': state.content.length > 0}" class="btn btn-icon btn-light btn-md btn-pill  wr wr-send j-pointer" @click="onSend()"></button>
+            <button :class="{'tyn-chat-has-content': state.content.length > 0}" class="btn btn-icon btn-light btn-md btn-pill  wr wr-send j-pointer" @click="onSend"></button>
           </li>
         </ul>
       </div>
