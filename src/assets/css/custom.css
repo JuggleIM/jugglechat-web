@@ -1453,6 +1453,10 @@
   display: flex;
   animation: qr-show 300ms ease-in-out forwards;
 }
+.jg-reaction-name{
+  min-width: 16px;
+  text-align: center;
+}
 .jg-reaction-emoji-pn{
   right: 100px;
   left: auto;
