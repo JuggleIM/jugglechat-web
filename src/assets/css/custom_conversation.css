@@ -158,3 +158,23 @@
 	background-color: #fbd349;
   color: #584300;
 }
+.tyn-staker-bubble .tyn-reply-text{
+  background: transparent;
+}
+.tyn-staker-bubble .tyn-reply-text .message-state{
+  position: relative;
+  left: unset;
+  bottom: unset;
+}
+.tyn-staker-bubble .tyn-reply-text .jg-message-senttime{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.jg-staker-msg-st{
+  background: #000d044f;
+  color: #FFF;
+  background: #000d044f;
+  padding: 0px 4px;
+  border-radius: 4px;
+}
