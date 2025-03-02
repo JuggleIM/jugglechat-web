@@ -1414,6 +1414,8 @@
 .jg-reactions{
   display: flex;
   flex-wrap: wrap;
+  gap: 0.2rem;
+  align-items: baseline;
 }
 .jg-reaction{
   background-color: #00800033;
@@ -1421,9 +1423,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2px 4px 0 0;
-  padding: 2px 12px;
-  border-radius: 10px;
+  padding: 2px 5px;
+  border-radius: 20px;
   font-size: 12px;
   cursor: pointer;
 }
@@ -1456,6 +1457,7 @@
 .jg-reaction-name{
   min-width: 16px;
   text-align: center;
+  user-select: none;
 }
 .jg-reaction-emoji-pn{
   right: 100px;

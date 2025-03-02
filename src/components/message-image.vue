@@ -107,8 +107,8 @@ function onChoiceEmoji(item){
   <ReactionEmoji :is-show="state.isShowReaction" @onhide="onShowEmojiReaction(false)" @onemit="onChoiceEmoji" :message="props.message"></ReactionEmoji>
   <div class="tyn-reply-group" @mouseleave="onShowDrop(false)">
     <span class="jg-sender-name" v-if="messageUtils.isGroup(props.message)">{{ props.message.sender.name }}</span>
-    <div class="tyn-reply-bubble"  >
-      <div class="tyn-reply-media tyn-reply-meida-img" :messageid="props.message.messageId" v-longpress="onClickRight" @click.right.prevent="onClickRight"  @click.prevent="onShowEmojiReaction(true)">
+    <div class="tyn-reply-bubble tyn-transpant-bubble">
+      <div class="tyn-reply-media tyn-reply-meida-img" :style="{'max-width': (calc().width < 60 ? 60 : calc().width) + 'px' }" :messageid="props.message.messageId" v-longpress="onClickRight" @click.right.prevent="onClickRight"  @click.prevent="onShowEmojiReaction(true)">
         <div class="tyn-img-loading" :mid="'img_msg_' +props.message.messageId" v-if="!props.message.localUrl">
           <div class="jg-img-loader"></div>
         </div>
@@ -122,19 +122,26 @@ function onChoiceEmoji(item){
 
         <Reaction :is-show="!utils.isEmpty(props.message.reactions)" :reactions="props.message.reactions" @oncancel="onChoiceEmoji"></Reaction>
 
-        <div class="wr message-state wr-circle" @click.stop="onShowReadDetail(true)"
-        :class="{ 'wr-dui': props.message.isRead && !messageUtils.isGroup(props.message) || props.message.unreadCount == 0, 'message-read': props.message.isRead && !messageUtils.isGroup(props.message) || props.message.readCount > 0 }"
-          v-if="props.message.isSender && !props.isRead">
-          <div v-if="messageUtils.isGroup(props.message) && props.message.readCount > 0 && props.message.unreadCount > 0"
-            class="message-group-state"
-            :style="{ 'background-image': 'conic-gradient( #008000 ' + props.message.readPercent + 'deg, transparent ' + props.message.readPercent + '.2deg)' }">
+        <div class="jg-message-senttime">
+          <div class="wr message-state wr-circle" @click.stop="onShowReadDetail(true)"
+            :class="{ 'wr-dui': props.message.isRead && !messageUtils.isGroup(props.message) || props.message.unreadCount == 0, 'message-read': props.message.isRead && !messageUtils.isGroup(props.message) || props.message.readCount > 0 }"
+            v-if="props.message.sentState == 2 && props.message.isSender && !props.isRead">
+
+            <div v-if="messageUtils.isGroup(props.message) && props.message.readCount > 0 && props.message.unreadCount > 0"
+              class="message-group-state"
+              :style="{ 'background-image': 'conic-gradient( #008000 ' + props.message.readPercent + 'deg, transparent ' + props.message.readPercent + '.2deg)' }">
+            </div>
+
+            <GroupReads v-if="state.isShowGroupDetail" :message="props.message"></GroupReads>
+
+            <div class="modal-backdrop fade show modal-tp-backdrop" @click.stop="onShowReadDetail(false)"
+              v-if="state.isShowGroupDetail" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"></div>
           </div>
-          <GroupReads v-if="state.isShowGroupDetail" :message="props.message"></GroupReads>
-          <div class="modal-backdrop fade show modal-tp-backdrop" @click.stop="onShowReadDetail(false)"
-            v-if="state.isShowGroupDetail" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"></div>
+
+          <span class="jg-staker-msg-st">{{ utils.formatTimetoHM(props.message.sentTime) }}</span>
         </div>
-        <div class="jg-message-senttime" v-if="props.message.sentTime">{{ utils.formatTimetoHM(props.message.sentTime) }}</div>
       </div>
+
 
       <ul class="tyn-reply-tools">
         <li>

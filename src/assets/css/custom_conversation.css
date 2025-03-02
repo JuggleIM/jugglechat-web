@@ -158,18 +158,24 @@
 	background-color: #fbd349;
   color: #281f00;
 }
+
+.tyn-transpant-bubble .tyn-reply-media,
 .tyn-staker-bubble .tyn-reply-text{
   background: transparent;
 }
+
+.tyn-transpant-bubble .tyn-reply-media .message-state,
 .tyn-staker-bubble .tyn-reply-text .message-state{
   position: relative;
   left: unset;
   bottom: unset;
 }
+.tyn-transpant-bubble .tyn-reply-media .jg-message-senttime,
 .tyn-staker-bubble .tyn-reply-text .jg-message-senttime{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 }
 .jg-staker-msg-st{
   background: #000d044f;
@@ -177,4 +183,13 @@
   background: #000d044f;
   padding: 0px 4px;
   border-radius: 4px;
+}
+.tyn-transpant-bubble .tyn-reply-media{
+  padding: 0;
+}
+
+.tyn-transpant-bubble .jg-reaction{
+  background-color: #fdfeff;
+  box-shadow: #03040445 0 3px 20px;
+  backdrop-filter: blur(30px);
 }

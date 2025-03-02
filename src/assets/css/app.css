@@ -915,14 +915,14 @@ dl {
   /* align-items: flex-end; */
   padding: var(--content-gap-y) var(--content-gap-x);
   padding-right: 0rem;
-  padding-left: 1rem;
+  padding-left: 6px;
 }
 .tyn-reply-item.outgoing{
   display: flex;
   flex-direction: row-reverse;
 }
 .outgoing .tyn-reply-avatar{
-  margin-left: 10px;
+  margin-left: 6px;
 }
 .tyn-reply-separator {
   font-size: 10px;
@@ -949,7 +949,7 @@ dl {
   display: inline-block; */
 }
 .tyn-reply-avatar {
-  margin-right: var(--avatar-gap);
+  margin-right: 6px;
   flex-shrink: 0;
   display: inline-flex;
 }
@@ -1107,6 +1107,7 @@ dl {
 .tyn-reply-media .tyn-image {
   height: 100%;
   object-fit: cover;
+  box-shadow: #00000042 0 10px 16px;
 }
 .tyn-reply-video{
   position: relative;
