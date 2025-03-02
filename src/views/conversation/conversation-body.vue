@@ -151,7 +151,7 @@ async function clearUnreadCount(item, index) {
             <div class="tyn-media-row jg-conversation-title">
               <h6 class="name">
                 {{ item.conversationTitle }}
-                <span class="wr wr-fire" v-if="item.conversationUserType == UserType.BOT">( 智能体 )</span>
+                <span class="jg-tag jg-tag-agent" v-if="item.conversationUserType == UserType.BOT">智能体</span>
               </h6>
               <span class="wr wr-soundoff jg-conver-mute" v-if="utils.isEqual(item.undisturbType, UndisturbType.DISTURB)"></span>
               <span class="typing" v-if="item.isTyping">typing ...</span>

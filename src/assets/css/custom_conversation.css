@@ -147,3 +147,14 @@
 .jg-msg-emoji-content{
   font-size: 4rem;
 }
+.jg-tag{
+	font-size: 0.6rem;
+	border-radius: 2px;
+	padding: 0 4px;
+	min-width: 2rem;
+	text-align: center;
+}
+.jg-tag-agent{
+	background-color: #fbd349;
+  color: #584300;
+}
