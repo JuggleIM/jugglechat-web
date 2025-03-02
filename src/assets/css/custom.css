@@ -161,7 +161,7 @@
 .message-state{
   position: absolute;
   left: -1rem;
-  bottom: 0;
+  bottom: -4px;
   cursor: pointer;
 }
 .message-state::before{
