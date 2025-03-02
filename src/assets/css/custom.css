@@ -8,7 +8,7 @@
   --appbar-height: 48px;
 }
 .tyn-web-root{
-  --footer-height: 20px;
+  --footer-height: 0px;
   height: calc(100vh - var(--footer-height));
 }
 @media (min-width: 768px){

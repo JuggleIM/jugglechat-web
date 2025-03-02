@@ -105,7 +105,7 @@ function removeNotify({ callId }){
       <component :is="Component" :key="route.fullPath" />
     </RouterView>
   </div>
-  <JFooter></JFooter>
+  <!-- <JFooter></JFooter> -->
   <ModalCall :is-show="state.isShowCall" :members="state.callMembers" :callid="state.activeCallId" @onhangup="callCore.onHangup"></ModalCall>
   <CallInviteNotify v-for="(notify, index) in state.callNotifyList" :callid="notify.callId" :index="index" :inviter="notify.inviter" @onhangup="onhangup" @onaccept="onaccept"></CallInviteNotify>
   <audio src="/2472.mp3" id="ringing" loop="true"></audio>
