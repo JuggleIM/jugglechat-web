@@ -841,10 +841,6 @@ function isUnknown(message){
   message.isUnknown = true;
 }
 function onAskAI(){
-  if(state.isAsking){
-    return;
-  }
-  state.isAsking = true;
   let { messages } = state;
   let msgs = [];
   for(let i = 0; i < messages.length; i++){
@@ -865,6 +861,22 @@ function onAskAI(){
     state.isAsking = false;
     return context.proxy.$toast({ text: `当前会话无文本消息`, icon: 'error' });
   }
+  requestAI(msgs);
+}
+function onAIReply({ message }){
+  let { sender, content, sentTime } = message;
+  let msgs = [{ 
+    sender_id: sender.id,
+    content: content.content,
+    msg_time: sentTime
+  }];
+  requestAI(msgs);
+}
+function requestAI(msgs){
+  if(state.isAsking){
+    return;
+  }
+  state.isAsking = true;
   AI.answer({ msgs }).then((result) => {
     let { code, msg, data } = result;
     state.isAsking = false;
@@ -874,6 +886,7 @@ function onAskAI(){
     state.content = data.answer;
   });
 }
+
 watch(() => state.content, (val) => {
   let str = val.split('')[val.length - 1]
   if (conversationTools.isGroup(state.currentConversation) && utils.isEqual(str, '@')) {
@@ -967,7 +980,8 @@ function isStaker(message){
                 @onreaction="onReaction" 
                 @onresend="onResendMessage"
                 @onfav="onFav"
-                @onpinned="onPinned">
+                @onpinned="onPinned"
+                @onaireply="onAIReply">
               </Staker>
               <Text v-else-if="utils.isEqual(message.name, MessageType.TEXT)" :message="message" 
                 @onrecall="onRecall"
@@ -977,7 +991,8 @@ function isStaker(message){
                 @onreaction="onReaction" 
                 @onresend="onResendMessage"
                 @onfav="onFav"
-                @onpinned="onPinned">
+                @onpinned="onPinned"
+                @onaireply="onAIReply">
               </Text>
 
               <ImageMessage v-else-if="utils.isEqual(message.name, MessageType.IMAGE)" :message="message"
@@ -1050,10 +1065,10 @@ function isStaker(message){
         </ul>
       </div>
       <Transfer :is-show="state.isShowTransfer" :op-type="state.msgOpType" @oncancel="onCancelTransfer(false)" @ontransfer="onTransfer"></Transfer>
-      <div class="jg-group-ban" v-if="state.isShowGroupMute">群组已禁言</div>
-      <div class="jg-askai-ban" v-if="state.isAsking">
+      <div class="jg-group-ban" :class="{'jg-ban-none' : !state.isShowGroupMute}">群组已禁言</div>
+      <div class="jg-askai-ban" :class="{'jg-ban-none': !state.isAsking}">
         <div class="jg-askai-loading"></div>
-        <div class="jg-askai-memo">AI 正在理解最近的 3 条文本消息</div>
+        <div class="jg-askai-memo">AI 深度思考中...</div>
       </div>
     </div>
     <ConversationAsider :is-show="state.isShowAside" 

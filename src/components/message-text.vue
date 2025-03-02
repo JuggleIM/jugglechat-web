@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps(['message', 'isRead']);
-const emit = defineEmits(["onrecall", "onmodify", 'ontransfer', 'onreply', 'onreaction', 'onresend', 'onpinned', 'onfav']);
+const emit = defineEmits(["onrecall", "onmodify", 'ontransfer', 'onreply', 'onreaction', 'onresend', 'onpinned', 'onfav', 'onaireply']);
 
 import { reactive, watch, getCurrentInstance } from "vue";
 import GroupReads from "./group-reads.vue";
@@ -74,6 +74,10 @@ function onTransfer(type){
 function onReply(){
   onShowDrop(false);
   emit('onreply', props.message);
+}
+function onAIReply(){
+  onShowDrop(false);
+  emit('onaireply', { message: props.message });
 }
 function onPinned(){
   onShowDrop(false);
@@ -196,6 +200,7 @@ function onResend(){
         <li>
           <Dropdownmenu :style="[  props.message.isSender ? 'right:' + state.dropRectX + 'px' : 'left:' + state.dropRectX + 'px']" :is-show="state.isShowDrop" :message="props.message" 
             @oncopy="onCopy" 
+            @onaireply="onAIReply"
             @onmodify="onShowModify()" 
             @onrecall="onRecall()" 
             @ontransfer="onTransfer(MESSAGE_OP_TYPE.TRANSLATE)" 

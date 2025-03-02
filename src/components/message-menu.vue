@@ -5,7 +5,7 @@ import utils from "../common/utils";
 import common from "../common/common";
 
 const props = defineProps(['isShow', 'message']);
-const emit = defineEmits(["onrecall", "onmodify", "ontransfer", "onreply", "onhide", "onremove", "oncopy", "onpinned", "onfav"]);
+const emit = defineEmits(["onrecall", "onmodify", "ontransfer", "onreply", "onhide", "onremove", "oncopy", "onpinned", "onfav", "onaireply"]);
 
 let juggle = im.getCurrent();
 let { MessageType } = juggle;
@@ -25,6 +25,11 @@ watch(() => props.isShow, (value) => {
 <template>
   <div class="dropdown-menu dropdown-menu-xxs fadein-o4" :class="{ 'show': props.isShow, 'dropdown-menu-xxs-bottom': !state.isTop }">
     <ul class="tyn-list-links">
+      <li class="tyn-list-link">
+        <a href="#" class="wr wr-gpt" @click.stop="emit('onaireply')" v-if="utils.isEqual(props.message.name, MessageType.TEXT)">
+          <span>智能回复</span>
+        </a>
+      </li>
       <li class="tyn-list-link">
         <a href="#" class="wr wr-copy" @click.stop="emit('oncopy')" v-if="utils.isEqual(props.message.name, MessageType.TEXT)">
           <span>复制消息</span>

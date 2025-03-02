@@ -24,7 +24,6 @@ avatars = utils.map(avatars, (url) => {
   return _avatar;
 });
 if(utils.isEmpty(current)){
-  current = avatars[0];
   current.isSelected = true;
 }
 

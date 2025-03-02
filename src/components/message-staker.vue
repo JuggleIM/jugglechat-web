@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps(['message', 'isRead']);
-const emit = defineEmits(["onrecall", "onmodify", 'ontransfer', 'onreply', 'onreaction', 'onresend', 'onpinned', 'onfav']);
+const emit = defineEmits(["onrecall", "onmodify", 'ontransfer', 'onreply', 'onreaction', 'onresend', 'onpinned', 'onfav', 'onaireply']);
 
 import { reactive, watch, getCurrentInstance } from "vue";
 import GroupReads from "./group-reads.vue";
@@ -111,6 +111,10 @@ function onChoiceEmoji(item){
 function onResend(){
   emit('onresend', { message: props.message });
 }
+function onAIReply(){
+  onShowDrop(false);
+  emit('onaireply', { message: props.message });
+}
 </script>
 
 <template>
@@ -165,6 +169,7 @@ function onResend(){
       <ul class="tyn-reply-tools">
         <li>
           <Dropdownmenu :style="[  props.message.isSender ? 'right:' + state.dropRectX + 'px' : 'left:' + state.dropRectX + 'px']" :is-show="state.isShowDrop" :message="props.message" 
+            @onaireply="onAIReply"
             @oncopy="onCopy" 
             @onrecall="onRecall()" 
             @onremove="onTransfer(MESSAGE_OP_TYPE.REMOVE)" 

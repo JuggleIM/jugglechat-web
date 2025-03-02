@@ -2272,16 +2272,19 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: #00000099;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 12px;
   color: #fefefe;
+  background-color: #0b3904b3;
+  box-shadow: #1f373061 0 3px 20px;
+  backdrop-filter: blur(2px);
+  transition: all 0.3s ease-in-out;
 }
-.jg-askai-ban{
-  background-color: #00000054;
-  display: flex;
+.jg-ban-none{
+  top: unset;
+  bottom: -100%;
 }
 .jg-askai-loading {
   margin-right: 1rem;
