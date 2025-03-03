@@ -33,5 +33,22 @@ export let EN = {
       VERIFY_CODE_EMPTY: 'The verify code cannot be empty',
       IM_TOKEN_EMPTY: 'Login failed. The IM Token is empty'
     }
+  },
+  HEADER: {
+    MENU: {
+      SEARCH: 'Search',
+      CREATE: 'Create',
+      CREATE_FRIREND: 'Add Friends',
+      CREATE_GROUP: 'Create Group',
+      CHAT: 'Chats',
+      CONTACT: 'Contacts',
+      SETTING: 'Settings',
+      FAV: 'Favorites',
+
+      USER_SETTING: 'User Setting',
+      INFO_UPDATE: 'User Modify',
+      ACCOUNT_MANAGE: 'Add Accounts',
+      LOGOUT: 'Log Out'
+    }
   }
 };

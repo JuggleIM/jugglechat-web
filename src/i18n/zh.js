@@ -33,5 +33,22 @@ export let ZH = {
       VERIFY_CODE_EMPTY: '验证码不可为空',
       IM_TOKEN_EMPTY: '登录失败，IM Token 为空'
     }
+  },
+  HEADER: {
+    MENU: {
+      SEARCH: '搜索',
+      CREATE: '创建',
+      CREATE_FRIREND: '添加好友',
+      CREATE_GROUP: '创建群组',
+      CHAT: '消息',
+      CONTACT: '通讯录',
+      SETTING: '设置',
+      FAV: '收藏',
+
+      USER_SETTING: '用户设置',
+      INFO_UPDATE: '信息修改',
+      ACCOUNT_MANAGE: '账号管理',
+      LOGOUT: '退出登录'
+    }
   }
 };

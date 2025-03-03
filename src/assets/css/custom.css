@@ -2214,8 +2214,11 @@
   left: 50px;
   top: -44px;
   z-index: 1210;
+  min-width: 9rem;
 }
-
+.tyn-h5header-create-list{
+  width: 3rem;
+}
 .jg-aside-btn-li{
   display: flex;
   justify-content: space-between;

@@ -30,20 +30,7 @@ let { _value: { path } } = router.currentRoute;
 let user = Storage.get(STORAGE.USER_TOKEN);
 
 let state = reactive({
-  settingMenus: [
-    { id: `${Date.now()}`, title: '消息', type: 'top', icon: 'message', event: ASIDE_MENU_TYPE.MESSAGE, name: 'ConversationList', isActive: utils.isEqual(path, '/conversation') },
-    { id: `${SYS_CONVERSATION_FRIEND}`, type: 'top', title: '通讯录', icon: 'contact', event: ASIDE_MENU_TYPE.CONTACT, name: 'Contacts', isActive: utils.isEqual(path, '/contacts'), unreadCount: 0 },
-  ],
-  addMenus: [
-    { name: '添加好友', icon: 'adduser', event: ASIDE_MENU_TYPE.ADD_FRIREND },
-    { name: '创建群组', icon: 'group', event: ASIDE_MENU_TYPE.ADD_GROUP },
-  ],
-  userMenus: [
-    { name: '用户设置', icon: 'config', event: ASIDE_MENU_TYPE.USER_SETTING },
-    { name: '信息修改', icon: 'operate', event: ASIDE_MENU_TYPE.USER_UPDATE },
-    { name: '账号管理', icon: 'adduser', event: ASIDE_MENU_TYPE.USER_ACCOUNT },
-    { name: '退出登录', icon: 'logout', isWarn: true, event: ASIDE_MENU_TYPE.USER_LOGOUT },
-  ],
+  i18n: common.i18n(),
   bottomMenus: [],
   isShowSearchModal: false,
   isShowAddMenu: false,
@@ -57,6 +44,11 @@ let state = reactive({
   isShowAddAccount: false,
   isShowFavoriteMsg: false,
 });
+utils.extend(state, {
+  settingMenus: getSettingMenus(),
+  addMenus: getAddMenus(),
+  userMenus: getUserMenus(),
+})
 
 function onShowAddMenu(isShow){
   state.isShowAddMenu = isShow;
@@ -192,6 +184,33 @@ watch(useRouterCurrent, (value) => {
     selectMenu(menu);
   }
 });
+
+function getSettingMenus(){
+  let { i18n } = state;
+  let HEADER_MENU = i18n.HEADER.MENU;
+  return [
+    { id: `${Date.now()}`, title: HEADER_MENU.CHAT, type: 'top', icon: 'message', event: ASIDE_MENU_TYPE.MESSAGE, name: 'ConversationList', isActive: utils.isEqual(path, '/conversation') },
+    { id: `${SYS_CONVERSATION_FRIEND}`, type: 'top', title: HEADER_MENU.CONTACT, icon: 'contact', event: ASIDE_MENU_TYPE.CONTACT, name: 'Contacts', isActive: utils.isEqual(path, '/contacts'), unreadCount: 0 },
+  ]
+}
+function getAddMenus(){
+  let { i18n } = state;
+  let HEADER_MENU = i18n.HEADER.MENU;
+  return [
+    { name: HEADER_MENU.CREATE_FRIREND, icon: 'adduser', event: ASIDE_MENU_TYPE.ADD_FRIREND },
+    { name: HEADER_MENU.CREATE_GROUP, icon: 'group', event: ASIDE_MENU_TYPE.ADD_GROUP },
+  ];
+}
+function getUserMenus(){
+  let { i18n } = state;
+  let HEADER_MENU = i18n.HEADER.MENU;
+  return [
+    { name: HEADER_MENU.USER_SETTING, icon: 'config', event: ASIDE_MENU_TYPE.USER_SETTING },
+    { name: HEADER_MENU.INFO_UPDATE, icon: 'operate', event: ASIDE_MENU_TYPE.USER_UPDATE },
+    { name: HEADER_MENU.ACCOUNT_MANAGE, icon: 'adduser', event: ASIDE_MENU_TYPE.USER_ACCOUNT },
+    { name: HEADER_MENU.LOGOUT, icon: 'logout', isWarn: true, event: ASIDE_MENU_TYPE.USER_LOGOUT },
+  ];
+}
 </script>
 
 <template>
@@ -207,14 +226,14 @@ watch(useRouterCurrent, (value) => {
       <li class="jg-footer-tool" v-if="juggle.isDesktop()">
         <div class="jg-asider-footer-item" @click="onShowSearchModal(true)">
           <div class="icon wr wr-search"></div>
-          <div class="name">搜索</div>
+          <div class="name">{{ state.i18n.HEADER.MENU.SEARCH }}</div>
         </div>
       </li>
 
       <li class="jg-footer-tool">
         <div class="jg-asider-footer-item" @click="onShowAddMenu(true)">
           <div class="icon wr wr-plus"></div>
-          <div class="name">创建</div>
+          <div class="name">{{ state.i18n.HEADER.MENU.CREATE }}</div>
         </div>
         <HeaderDropMenu @onemit="onDropMenuClick" :is-show="state.isShowAddMenu" :menus="state.addMenus" :class="'tyn-header-create-list'" @onhide="onShowAddMenu(false)"></HeaderDropMenu>
       </li>
@@ -230,7 +249,7 @@ watch(useRouterCurrent, (value) => {
       <li class="jg-footer-tool">
         <div class="jg-asider-footer-item" @click="onShowFavoriteMsg(true)">
           <div class="icon wr wr-fav"></div>
-          <div class="name">收藏</div>
+          <div class="name">{{ state.i18n.HEADER.MENU.FAV }}</div>
         </div>
       </li>
     </ul>

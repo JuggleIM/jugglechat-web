@@ -293,7 +293,7 @@ function isGroup(message) {
 }
 
 function i18n(){
-  return languages.en;
+  return languages.zh;
 }
 
 export default {
