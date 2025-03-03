@@ -20,12 +20,15 @@ import emitter from "../../common/emmit";
 
 let juggle = im.getCurrent();
 let { ConversationType, Event, ConnectionState } = juggle;
+let i18n = common.i18n();
+
+let CONTACT_I18N = i18n.CONTACT;
 
 let tabs = [
-    { id: Date.now(), name: '联系人', type: CONTACT_TYPE.FRIEND, icon: 'contact', isActive: true },
-    { id: SYS_CONVERSATION_FRIEND, name: '新朋友', type: CONTACT_TYPE.NEW_FRIEND, unreadCount: 0, icon: 'adduser', isActive: false },
-    { id: Date.now(), name: '群组', type: CONTACT_TYPE.GROUP, icon: 'group', isActive: false },
-    { id: Date.now(), name: '智能体', type: CONTACT_TYPE.BOT, icon: 'bot', isActive: false },
+    { id: Date.now(), name: CONTACT_I18N.FRIEND, type: CONTACT_TYPE.FRIEND, icon: 'contact', isActive: true },
+    { id: SYS_CONVERSATION_FRIEND, name: CONTACT_I18N.NEW_FRIEND, type: CONTACT_TYPE.NEW_FRIEND, unreadCount: 0, icon: 'adduser', isActive: false },
+    { id: Date.now(), name: CONTACT_I18N.GROUP, type: CONTACT_TYPE.GROUP, icon: 'group', isActive: false },
+    { id: Date.now(), name: CONTACT_I18N.AGENT, type: CONTACT_TYPE.BOT, icon: 'bot', isActive: false },
   ];
 let contacts = [];
 let groups = [];
@@ -117,7 +120,7 @@ function getBots(){
   Friend.getBots({ count: 50 }).then((result) => {
     let { data: { items }, code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
-      return context.proxy.$toast({ text: `获取失败: ${error.code}`, icon: 'error' });
+      return context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
     }
     let list = utils.map(items, (item) => {
       let { bot_id, nickname, avatar } = item;
@@ -137,7 +140,7 @@ function getNewFriends(start = 0){
   Friend.getNewList({ start, count: 50, order: 0 }).then((result) => {
     let { data: { items = [] }, code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
-      return context.proxy.$toast({ text: `获取失败: ${error.code}`, icon: 'error' });
+      return context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
     }
 
     let user = Storage.get(STORAGE.USER_TOKEN);
@@ -147,9 +150,10 @@ function getNewFriends(start = 0){
       
       let _user = target_user;
       let avatar = target_user.avatar || '';
-      let content = `${target_user.nickname || target_user.user_id} 添加你为好友`;
+      let username = target_user.nickname || target_user.user_id;
+      let content = utils.templateFormat(CONTACT_I18N.USER_ADD_SELF, { name: username });
       if(is_sponsor){
-        content = `你添加 ${target_user.nickname || target_user.user_id} 为好友`;
+        content = utils.templateFormat(CONTACT_I18N.SELF_ADD_USER, { name: username })
       }
       return {
         id: utils.getUUID(),
@@ -173,10 +177,10 @@ function getNewFriends(start = 0){
   });
 }
 let statusMap = {};
-statusMap[FRIEND_APPLY_STATUS.APPLYING] = '待处理';
-statusMap[FRIEND_APPLY_STATUS.ACCEPTED] = '已添加';
-statusMap[FRIEND_APPLY_STATUS.DECLINED] = '已拒绝';
-statusMap[FRIEND_APPLY_STATUS.EXPIRED] = '已过期';
+statusMap[FRIEND_APPLY_STATUS.APPLYING] = CONTACT_I18N.NEW_APPLYING;
+statusMap[FRIEND_APPLY_STATUS.ACCEPTED] = CONTACT_I18N.NEW_ACCEPTED;
+statusMap[FRIEND_APPLY_STATUS.DECLINED] = CONTACT_I18N.NEW_DECLINED;
+statusMap[FRIEND_APPLY_STATUS.EXPIRED] = CONTACT_I18N.NEW_DECLINED;
 function onAddFriend({ item }){
   item.status = FRIEND_APPLY_STATUS.ACCEPTED;
   item.statusName = statusMap[item.status];
@@ -203,7 +207,7 @@ function getFriends(startUserId = ''){
   Friend.getList({ userId: user.id, count: 20, startUserId }).then((result) => {
     let { data: { items }, code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
-      return context.proxy.$toast({ text: `获取失败: ${error.code}`, icon: 'error' });
+      return context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
     }
 
     let list = utils.map(items, (item) => {
@@ -229,7 +233,7 @@ function getGroups(startId = ''){
   Group.getList({ count: 20, startId }).then((result) => {
     let { data: { items }, code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
-      return context.proxy.$toast({ text: `获取失败: ${error.code}`, icon: 'error' });
+      return context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
     }
 
     let list = utils.map(items, (item) => {
@@ -282,7 +286,7 @@ getFriends();
                   <div class="jg-friend-applystatus" v-if="utils.isEqual(item.type, CONTACT_TYPE.NEW_FRIEND)">{{ item.statusName }}</div>
                 </div>
               </li>
-              <li class="tyn-aside-item js-toggle-main name tyn-aside-nothing" v-if="state.currentList.length == 0">没有更多了</li>
+              <li class="tyn-aside-item js-toggle-main name tyn-aside-nothing" v-if="state.currentList.length == 0">{{ i18n.COMMON.LIST_NONE }}</li>
             </ul>
           </div>
         </div>

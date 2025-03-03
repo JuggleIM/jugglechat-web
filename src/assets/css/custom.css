@@ -2079,8 +2079,8 @@
 }
 .jg-contact-navs{
   display: flex;
-  justify-content: space-between;
-  height: 50px;
+  justify-content: space-around;
+  height: 36px;
 }
 .nav-unreadcount{
   position: absolute;
@@ -2111,7 +2111,7 @@
 .jg-friend-applystatus{
   font-size: 12px;
   color: #a7a8ab;
-  width: 40px;
+  /* width: 40px; */
 }
 .warn-bg{
   background-color: #ef2323;

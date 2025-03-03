@@ -361,8 +361,7 @@ dl {
   padding: var(--aside-gap-y) var(--aside-gap-x);
 }
 .tyn-aside-contact-row{
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 .tyn-aside-row .nav-tabs-line {
   margin: 0 calc(var(--aside-gap-x) * -1);

@@ -103,5 +103,17 @@ export let EN = {
     TITLE: 'Accounts',
     ADD: 'Add another account',
     REMOVE: 'Remove'
+  },
+  CONTACT: {
+    FRIEND: 'Contacts',
+    NEW_FRIEND: 'New Friends',
+    GROUP: 'Groups',
+    AGENT: 'Agents',
+    USER_ADD_SELF: '{name} add you as a friend',
+    SELF_ADD_USER: 'You added {name} as a friend',
+    NEW_APPLYING: 'Applying',
+    NEW_ACCEPTED: 'Accepted',
+    NEW_DECLINED: 'Declined',
+    NEW_EXPIRED: 'Expired',
   }
 };

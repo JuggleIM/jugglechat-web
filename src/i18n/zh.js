@@ -103,5 +103,17 @@ export let ZH = {
     TITLE: '账号管理',
     ADD: '添加账号',
     REMOVE: '删除'
+  },
+  CONTACT: {
+    FRIEND: '联系人',
+    NEW_FRIEND: '新朋友',
+    GROUP: '群组',
+    AGENT: '智能体',
+    USER_ADD_SELF: '{name} 添加你为好友',
+    SELF_ADD_USER: '你添加 {name} 为好友',
+    NEW_APPLYING: '待处理',
+    NEW_ACCEPTED: '已添加',
+    NEW_DECLINED: '已拒绝',
+    NEW_EXPIRED: '已过期',
   }
 };
