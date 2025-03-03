@@ -7,7 +7,8 @@ export let ZH = {
     OP_SUCCESS: '操作成功',
     YES: '是',
     NO: '否',
-    LIST_NONE: '没有更多了'
+    LIST_NONE: '没有更多了',
+    YOU: '你'
   },
   LOGIN: {
     COMMON: {
@@ -145,6 +146,20 @@ export let ZH = {
       CHAT: '消息',
       RECENTLY: '最近会话',
       SELECTED: '已选会话'
+    },
+    LAST_MSG: {
+      NOT_SUPPORT: '[暂不支持]',
+      FILE: '[文件]',
+      IMAGE: '[图片]',
+      VIDEO: '[视频]',
+      VOICE: '[语音]',
+      MERGE: '[聊天记录]',
+      GRP_NTF: '[群通知]',
+      FRD_NTF: '[添加好友通知]',
+      CARD: '[名片]',
+      CALL: '[音视频通话]',
+      AGENT: '[智能体]',
+      RECALL: '{name} 撤回了一条消息',
     }
   }
 };

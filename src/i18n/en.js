@@ -7,7 +7,8 @@ export let EN = {
     OP_SUCCESS: 'Success',
     YES: 'Yes',
     NO: 'No',
-    LIST_NONE: 'No more data'
+    LIST_NONE: 'No more data',
+    YOU: 'You'
   },
   LOGIN: {
     COMMON: {
@@ -145,6 +146,20 @@ export let EN = {
       CHAT: 'Chats',
       RECENTLY: 'Recently Chats',
       SELECTED: 'Selected Chats'
+    },
+    LAST_MSG: {
+      NOT_SUPPORT: '[Not Support]',
+      FILE: '[File]',
+      IMAGE: '[Image]',
+      VIDEO: '[Video]',
+      VOICE: '[Voice]',
+      MERGE: '[Merge]',
+      GRP_NTF: '[Group Ntf]',
+      FRD_NTF: '[Add Friend Ntf]',
+      CARD: '[Card]',
+      CALL: '[Call]',
+      AGENT: '[Agent]',
+      RECALL: '{name} has recall a message',
     }
   }
 };
