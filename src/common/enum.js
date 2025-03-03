@@ -137,37 +137,10 @@ let ASIDE_MENU_TYPE = {
   SETTING: 10,
   USER_QRCODE: 11,
   USER_FAV: 12,
-  USER_AGREENMENT: 13,
+  USER_AGREEMENT: 13,
   USER_PRIVACY: 14,
 };
 
-let SETTING_CARDS = [
-  { tag: 1, 
-    menus: [ 
-    { name: '用户设置', icon: 'config', event: ASIDE_MENU_TYPE.USER_SETTING },
-    { name: '信息修改', icon: 'operate', event: ASIDE_MENU_TYPE.USER_UPDATE },
-    { name: '我的收藏', icon: 'fav', event: ASIDE_MENU_TYPE.USER_FAV },
-    { name: '我的二维码', icon: 'qrcode', event: ASIDE_MENU_TYPE.USER_QRCODE },
-    ] 
-  },
-  { tag: 2, 
-    menus: [ 
-    { name: '账号管理', icon: 'adduser', event: ASIDE_MENU_TYPE.USER_ACCOUNT },
-    ] 
-  },
-  { 
-    tag: 3, 
-    menus: [ 
-    { name: '用户协议', icon: 'config', event: ASIDE_MENU_TYPE.USER_AGREENMENT },
-    { name: '隐私协议', icon: 'operate', event: ASIDE_MENU_TYPE.USER_PRIVACY },
-    ]
-  },
-  { tag: 10, 
-    menus: [ 
-    { name: '退出登录', icon: 'logout', isWarn: true, event: ASIDE_MENU_TYPE.USER_LOGOUT },
-    ] 
-  },
-];
 let USER_AGREEMENT = {
   USER: 'https://juggle.im/jc/user.html',
   PRIVACY: 'https://juggle.im/jc/privacy.html',
@@ -179,4 +152,4 @@ let LOGIN_TYPE = {
   EMAIL: 3,
 };
 
-export { LOGIN_TYPE, USER_AGREEMENT, SETTING_CARDS, ASIDE_MENU_TYPE, LANGUAGES, GROUP_ROLE, ASIDER_SETTING_SWITCH, GROUP_AVATAR, FILE_TYPE, SYS_CONVERSATION_FRIEND, SYS_CONVERSATION_GROUP, IGNORE_CONVERSATIONS, FRIEND_APPLY_STATUS, CONTACT_TYPE, SETTING_TYPE, EVENT_NAME, TRANSFER_TYPE, CONTACT_TAB_TYPE, RESPONSE, GROUP_CHANGE_TYPE, MSG_NAME, REG_EXP, MESSAGE_OP_TYPE, CONVERATION_TAG_ID, CONVERSATION_TAG_TYPE }
+export { LOGIN_TYPE, USER_AGREEMENT, ASIDE_MENU_TYPE, LANGUAGES, GROUP_ROLE, ASIDER_SETTING_SWITCH, GROUP_AVATAR, FILE_TYPE, SYS_CONVERSATION_FRIEND, SYS_CONVERSATION_GROUP, IGNORE_CONVERSATIONS, FRIEND_APPLY_STATUS, CONTACT_TYPE, SETTING_TYPE, EVENT_NAME, TRANSFER_TYPE, CONTACT_TAB_TYPE, RESPONSE, GROUP_CHANGE_TYPE, MSG_NAME, REG_EXP, MESSAGE_OP_TYPE, CONVERATION_TAG_ID, CONVERSATION_TAG_TYPE }

@@ -2,7 +2,7 @@
 import utils from "../../common/utils";
 import { useRouter } from "vue-router";
 import { reactive, getCurrentInstance, watch } from "vue";
-import { RESPONSE, EVENT_NAME, ASIDE_MENU_TYPE, SETTING_CARDS, USER_AGREEMENT }  from "../../common/enum";
+import { RESPONSE, EVENT_NAME, ASIDE_MENU_TYPE, USER_AGREEMENT }  from "../../common/enum";
 
 import H5TBar from "../conversation/conversation-tbar.vue";
 import H5Header from "../conversation/conversation-header.vue";
@@ -27,7 +27,7 @@ let { ConversationType, Event, ConnectionState } = juggle;
 let user = Storage.get(STORAGE.USER_TOKEN);
 let state = reactive({
   user: user,
-  cards: SETTING_CARDS,
+  cards: common.getSettingCards(),
   isShowUserUpdateAsider: false,
   isShowUserSettingAsider: false,
   isShowAccountAsider: false,
@@ -59,7 +59,7 @@ function onClick(menu){
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_FAV)){
     onShowFavoriteMsg(true);
   }
-  if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_AGREENMENT)){
+  if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_AGREEMENT)){
     onShowUserAgreement(true, USER_AGREEMENT.USER, '用户协议');
   }
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_PRIVACY)){

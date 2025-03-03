@@ -1,7 +1,12 @@
 export let ZH = {
   COMMON: {
     CONFIRM_BTN: '确定',
-    CANCEL_BTN: '取消'
+    CANCEL_BTN: '取消',
+    SAVE_BTN: '保存',
+    SAVE_SUCCESS: '保存成功',
+    YES: '是',
+    NO: '否',
+    LIST_NONE: '没有更多了'
   },
   LOGIN: {
     COMMON: {
@@ -65,5 +70,38 @@ export let ZH = {
   },
   CREATE_GROUP: {
     TITLE: '创建群组',
+  },
+  USER_SETTING: {
+    TITLE: '用户设置',
+    USER_ID: '用户 ID',
+    SETTING: '用户设置',
+    INFO_UPDATE: '用户修改',
+    FAVORITE: '我的收藏',
+    QRCODE: '我的二维码',
+    SCANQR_DESC: '扫一扫二维码，加我为好友',
+    ACCOUNT: '账号管理',
+    USER_AGREEMENT: '用户协议',
+    USER_PRIVACY: '隐私协议',
+    LOGOUT: '退出登录'
+  },
+  USER_MODIFY: {
+    TITLE: '修改信息',
+    PLACEHOLDER: '输入昵称'
+  },
+  USER_CONFIG: {
+    TITLE: '用户设置',
+    PUSH_LANGUAGE: '推送语言',
+    FRIEND_VERIFY: '是否开启好友验证',
+    MUTE: '全局免打扰',
+    ENABLE_MSG_NOTIFY: '允许消息通知'
+  },
+  USER_FAV: {
+    TITLE: '用户收藏',
+    FROM: '来自'
+  },
+  ACCOUNT_MANAGE: {
+    TITLE: '账号管理',
+    ADD: '添加账号',
+    REMOVE: '删除'
   }
 };

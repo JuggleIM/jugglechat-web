@@ -1,7 +1,12 @@
 export let EN = {
   COMMON: {
     CONFIRM_BTN: 'Confirm',
-    CANCEL_BTN: 'Cancel'
+    CANCEL_BTN: 'Cancel',
+    SAVE_BTN: 'Save',
+    SAVE_SUCCESS: 'Success',
+    YES: 'Yes',
+    NO: 'No',
+    LIST_NONE: 'No more data'
   },
   LOGIN: {
     COMMON: {
@@ -65,5 +70,38 @@ export let EN = {
   },
   CREATE_GROUP: {
     TITLE: 'Create Group',
+  },
+  USER_SETTING: {
+    TITLE: 'Settings',
+    USER_ID: 'User ID',
+    SETTING: 'User Settings',
+    INFO_UPDATE: 'User Modify',
+    FAVORITE: 'My Favorites',
+    QRCODE: 'My QR Code',
+    SCANQR_DESC: 'Scan QR Code add me as a friend',
+    ACCOUNT: 'Accounts',
+    USER_AGREEMENT: 'User Agreement',
+    USER_PRIVACY: 'User Privacy',
+    LOGOUT: 'Log Out'
+  },
+  USER_MODIFY: {
+    TITLE: 'Edit User Info',
+    PLACEHOLDER: 'Please enter user nickname'
+  },
+  USER_CONFIG: {
+    TITLE: 'User Settings',
+    PUSH_LANGUAGE: 'Push Language',
+    FRIEND_VERIFY: 'Friend Verification',
+    MUTE: 'Global Disturb',
+    ENABLE_MSG_NOTIFY: 'Enable message notification'
+  },
+  USER_FAV: {
+    TITLE: 'Favorites',
+    FROM: 'from'
+  },
+  ACCOUNT_MANAGE: {
+    TITLE: 'Accounts',
+    ADD: 'Add another account',
+    REMOVE: 'Remove'
   }
 };

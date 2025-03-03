@@ -19,6 +19,7 @@ if(utils.isEmpty(current)){
 }
 
 let state = reactive({
+  i18n: common.i18n(),
   current: current,
   username: user.name || '',
   isNameError: false,
@@ -46,7 +47,7 @@ function onConfirm(){
     if(!utils.isEqual(result.code, RESPONSE.SUCCESS)){
       let errorCode = result.code;
       return context.proxy.$toast({
-        text: `保存失败：${errorCode}`,
+        text: `Error: ${errorCode}`,
         icon: 'error'
       });
     }
@@ -67,14 +68,14 @@ function onNameInput(){
 </script>
 
 <template>
-  <Asider :is-show="props.isShow" :title="'修改信息'" @oncancel="onCancel" :disabled-close="props.disabledClose">
+  <Asider :is-show="props.isShow" :title="state.i18n.USER_MODIFY.TITLE" @oncancel="onCancel" :disabled-close="props.disabledClose">
     <div class="jg-aside-userupdate-body">
       <div class="form-group">
-        <input type="text" class="form-control" :class="{'form-control-warn': state.isNameError}" placeholder="输入昵称" v-model="state.username" @input="onNameInput()">
+        <input type="text" class="form-control" :class="{'form-control-warn': state.isNameError}" :placeholder="state.i18n.USER_MODIFY.PLACEHOLDER" v-model="state.username" @input="onNameInput()">
       </div>
       <div class="form-group">
         <div class="form-control-wrap">
-          <a class="btn btn-primary-soft w-100" @click="onConfirm()">保存</a>
+          <a class="btn btn-primary-soft w-100" @click="onConfirm()">{{ state.i18n.COMMON.SAVE_BTN }}</a>
         </div>
       </div>
     </div>

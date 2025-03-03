@@ -14,7 +14,7 @@ import AsideFavoriteMsg from "./aside-msg-favorite.vue";
 import AsideUserAgreement from "./aside-user-agreement.vue";
 
 import { User } from "../services/index";
-import { RESPONSE, STORAGE, ASIDE_MENU_TYPE, EVENT_NAME, SETTING_CARDS, USER_AGREEMENT } from "../common/enum";
+import { RESPONSE, STORAGE, ASIDE_MENU_TYPE, EVENT_NAME, USER_AGREEMENT } from "../common/enum";
 import Storage from "../common/storage";
 
 const context = getCurrentInstance();
@@ -24,7 +24,7 @@ const emit = defineEmits(["oncancel"]);
 let user = Storage.get(STORAGE.USER_TOKEN);
 let state = reactive({
   user: user,
-  cards: SETTING_CARDS,
+  cards: common.getSettingCards(),
   isShowUserUpdateAsider: false,
   isShowUserSettingAsider: false,
   isShowAccountAsider: false,
@@ -33,6 +33,7 @@ let state = reactive({
   isShowUserAgreement: false,
   userAgreentUrl: '',
   userAgreentTitle: '',
+  i18n: common.i18n()
 });
 
 function onLogout(){
@@ -56,11 +57,11 @@ function onClick(menu){
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_FAV)){
     onShowFavoriteMsg(true);
   }
-  if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_AGREENMENT)){
-    onShowUserAgreement(true, USER_AGREEMENT.USER, '用户协议');
+  if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_AGREEMENT)){
+    onShowUserAgreement(true, USER_AGREEMENT.USER, state.i18n.USER_SETTING.USER_AGREEMENT);
   }
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_PRIVACY)){
-    onShowUserAgreement(true, USER_AGREEMENT.PRIVACY, '隐私协议');
+    onShowUserAgreement(true, USER_AGREEMENT.PRIVACY, state.i18n.USER_SETTING.USER_PRIVACY);
   }
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_LOGOUT)){
     emitter.$emit(EVENT_NAME.UN_UNATHORIZED);
@@ -94,7 +95,7 @@ emitter.$on(EVENT_NAME.ON_USER_INFO_UPDATE, ({ user }) => {
 </script>
 
 <template>
-  <Asider :is-show="props.isShow" :title="'个人设置'" @oncancel="onCancel" :cls="'jg-aside-ust-box'">
+  <Asider :is-show="props.isShow" :title="state.i18n.USER_SETTING.SETTING" @oncancel="onCancel" :cls="'jg-aside-ust-box'">
     <div class="jg-aside-userst-body jg-setting-aside">
       <ul class="jg-cards">
           <li class="jg-card jg-card-userinfo">
@@ -109,7 +110,7 @@ emitter.$on(EVENT_NAME.ON_USER_INFO_UPDATE, ({ user }) => {
                 <div class="jg-header-user-name">{{ state.user.name }}</div>
               </li>
               <li class="jg-li">
-                <div class="label">用户 ID</div>
+                <div class="label">{{ state.i18n.USER_SETTING.USER_ID }}</div>
                 <div class="value">{{ state.user.id }}</div>
               </li>
             </ul>
@@ -139,8 +140,8 @@ emitter.$on(EVENT_NAME.ON_USER_INFO_UPDATE, ({ user }) => {
   <AsiderQrCode 
     :is-show="state.isShowUserQrcode"
     :right="0"
-    :title="'我的二维码'"
-    :desc="'扫一扫二维码，加我为好友'"
+    :title="state.i18n.USER_SETTING.QRCODE"
+    :desc="state.i18n.USER_SETTING.SCANQR_DESC"
     :isGroup="0"
     :uid="state.user.id"
     @oncancel="onShowUserQrCode(false)">

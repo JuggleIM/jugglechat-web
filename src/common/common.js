@@ -2,7 +2,7 @@ import utils from "./utils";
 import { User, Group, Friend } from "../services/index";
 import html2canvas from 'html2canvas';
 import im from './im';
-import { IGNORE_CONVERSATIONS, FILE_TYPE } from "../common/enum"
+import { IGNORE_CONVERSATIONS, FILE_TYPE, ASIDE_MENU_TYPE } from "../common/enum"
 import languages from "../i18n/i18n";
 
 import  MarkdownIt from 'markdown-it';
@@ -293,9 +293,39 @@ function isGroup(message) {
 }
 
 function i18n(){
-  return languages.zh;
+  return languages.en;
 }
 
+function getSettingCards(){
+  let USER_SETTING = i18n().USER_SETTING;
+  return [
+    { tag: 1, 
+      menus: [ 
+      { name: USER_SETTING.SETTING, icon: 'config', event: ASIDE_MENU_TYPE.USER_SETTING },
+      { name: USER_SETTING.INFO_UPDATE, icon: 'operate', event: ASIDE_MENU_TYPE.USER_UPDATE },
+      { name: USER_SETTING.FAVORITE, icon: 'fav', event: ASIDE_MENU_TYPE.USER_FAV },
+      { name: USER_SETTING.QRCODE, icon: 'qrcode', event: ASIDE_MENU_TYPE.USER_QRCODE },
+      ] 
+    },
+    { tag: 2, 
+      menus: [ 
+      { name: USER_SETTING.ACCOUNT, icon: 'adduser', event: ASIDE_MENU_TYPE.USER_ACCOUNT },
+      ] 
+    },
+    { 
+      tag: 3, 
+      menus: [ 
+      { name: USER_SETTING.USER_AGREEMENT, icon: 'config', event: ASIDE_MENU_TYPE.USER_AGREEMENT },
+      { name: USER_SETTING.USER_PRIVACY, icon: 'operate', event: ASIDE_MENU_TYPE.USER_PRIVACY },
+      ]
+    },
+    { tag: 10, 
+      menus: [ 
+      { name: USER_SETTING.LOGOUT, icon: 'logout', isWarn: true, event: ASIDE_MENU_TYPE.USER_LOGOUT },
+      ] 
+    },
+  ]
+}
 export default {
   isElementTop,
   createGroupAvatar,
@@ -315,5 +345,6 @@ export default {
   isShowStaker,
   splitGraphemes,
   isGroup,
-  i18n
+  i18n,
+  getSettingCards
 }
