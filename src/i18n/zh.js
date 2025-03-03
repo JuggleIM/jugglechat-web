@@ -1,4 +1,8 @@
 export let ZH = {
+  COMMON: {
+    CONFIRM_BTN: '确定',
+    CANCEL_BTN: '取消'
+  },
   LOGIN: {
     COMMON: {
       SEND: '发送',
@@ -50,5 +54,16 @@ export let ZH = {
       ACCOUNT_MANAGE: '账号管理',
       LOGOUT: '退出登录'
     }
+  },
+  SEARCH_FRIEND: {
+    TITLE: '添加好友',
+    PLACEHOLDER: '输入手机号回车搜索好友',
+    PHONE_EMPTY: '手机号不可为空',
+    PHONE_ERROR: '手机号不正确',
+    USER_NONE: '没有找到用户',
+    REQUEST_SENT: '已发送好友添加请求',
+  },
+  CREATE_GROUP: {
+    TITLE: '创建群组',
   }
 };

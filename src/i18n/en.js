@@ -1,4 +1,8 @@
 export let EN = {
+  COMMON: {
+    CONFIRM_BTN: 'Confirm',
+    CANCEL_BTN: 'Cancel'
+  },
   LOGIN: {
     COMMON: {
       SEND: 'Send',
@@ -50,5 +54,16 @@ export let EN = {
       ACCOUNT_MANAGE: 'Add Accounts',
       LOGOUT: 'Log Out'
     }
+  },
+  SEARCH_FRIEND: {
+    TITLE: 'Add Friends',
+    PLACEHOLDER: "Enter phone number to search friends",
+    PHONE_EMPTY: 'The phone number cannot be empty',
+    PHONE_ERROR: 'The phone number is incorrect',
+    USER_NONE: 'No friend found',
+    REQUEST_SENT: 'Friend addition request has been sent',
+  },
+  CREATE_GROUP: {
+    TITLE: 'Create Group',
   }
 };

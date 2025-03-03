@@ -17,7 +17,8 @@ let juggle = im.getCurrent();
 let { ConversationType } = juggle;
 let state = reactive({
   friends: [],
-  isCreateGroupLoading: false
+  isCreateGroupLoading: false,
+  i18n: common.i18n(),
 });
 let user = Storage.get(STORAGE.USER_TOKEN);
 
@@ -120,7 +121,7 @@ function onSelected(item) {
 </script>
 
 <template>
-  <Asider :is-show="props.isShow" :title="props.title || '创建群组'" @oncancel="onCancel" :right="props.right">
+  <Asider :is-show="props.isShow" :title="props.title || state.i18n.CREATE_GROUP.TITLE" @oncancel="onCancel" :right="props.right">
     <div class="jg-aside-group-body">
       <ul class="tyn-media-list gap gap-2">
         <li v-for="item in state.friends" @click="onSelected(item)" class="tyn-media-item">
@@ -138,10 +139,10 @@ function onSelected(item) {
       </ul>
       <ul class="tyn-list-inline gap gap-3 pt-3 tny-content-center jg-tools">
         <li>
-          <button class="btn btn-sm btn-success" @click="onConfirm()">确认</button>
+          <button class="btn btn-sm btn-success" @click="onConfirm()">{{ state.i18n.COMMON.CONFIRM_BTN }}</button>
         </li>
         <li>
-          <button class="btn btn-sm btn-light" @click="onCancel()">取消</button>
+          <button class="btn btn-sm btn-light" @click="onCancel()">{{ state.i18n.COMMON.CANCEL_BTN }}</button>
         </li>
       </ul>
       <div class="modal-body modal-loading" v-if="props.isLoading">
