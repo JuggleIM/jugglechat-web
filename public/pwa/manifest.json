@@ -1,7 +1,7 @@
 {
-  "name": "JuggleChat",
-  "short_name": "JuggleChat",
-  "start_url": "https://im.jugglechat.com/",
+  "name": "JuggleGram",
+  "short_name": "JuggleGram",
+  "start_url": "https://im.juggle.im",
   "display": "standalone",
   "icons": [
     {
@@ -16,14 +16,14 @@
       "sizes": "2880x1589",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "JuggleChat Desktop App"
+      "label": "JuggleGram Desktop App"
     },
     {
       "src": "/pwa/screenshot.png",
       "sizes": "2880x1589",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "JuggleChat Desktop App"
+      "label": "JuggleGram Desktop App"
     }
   ]
 }

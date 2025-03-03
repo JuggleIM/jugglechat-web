@@ -58,8 +58,8 @@ function getContent(content){
   </div>
   <div class="tyn-reply-group">
     <div class="tyn-reply-bubble" :messageid="props.message.messageId" :messageId="props.message.tid">
-      <div class="tyn-reply-text jg-stream-text">
-        <div class="markdown-body" v-html="getContent(state.content)"></div>
+      <div class="markdown-body tyn-reply-text jg-stream-text">
+        <div v-html="getContent(state.content)"></div>
         <!-- <div class="jg-stream-completed" v-if="props.message.streamMsg.isEnd">已完成</div> -->
       </div>
     </div>

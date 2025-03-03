@@ -70,7 +70,7 @@ function onShowCreateGroup(isShow){
         </div>
         <HeaderDropMenu @onemit="onDropMenuClick" :is-show="state.isShowNavBar" :menus="state.tbars" :class="'tyn-h5header-nav-list'" @onhide="onShowNavBar(false)"></HeaderDropMenu>
       </li>
-      <li class="jg-h5header-title">JuggleChat</li>
+      <li class="jg-h5header-title">JuggleGram</li>
       <li class="jg-h5header-right" v-if="state.isShowAddButton">
         <div class="jg-asider-footer-item" @click="onShowAddMenu(true)">
           <div class="icon wr wr-plus-w600"></div>

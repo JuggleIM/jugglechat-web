@@ -213,9 +213,9 @@ watch(() => props.isShow, () => {
         </div>
       </div>
       <div class="jg-nlogin-intro-box">
-        <h2 class="jg-nlogin-intro-title">Log in to JuggleChat by QR Code</h2>
+        <h2 class="jg-nlogin-intro-title">Log in to JuggleGram by QR Code</h2>
         <ul class="jg-nlogin-intros">
-          <li class="jg-nlogin-intro wr wr-1">Open JuggleChat on your phone</li>
+          <li class="jg-nlogin-intro wr wr-1">Open JuggleGram on your phone</li>
           <li class="jg-nlogin-intro wr wr-2">Go to Home Page -> QRCode</li>
           <li class="jg-nlogin-intro wr wr-3">Point your phone at this screen to confirm login</li>
         </ul>
@@ -225,7 +225,7 @@ watch(() => props.isShow, () => {
     <div class="jg-nlogin-main" v-else>
       <div class="jg-nlogin-normalbox">
         <div class="jg-nlogin-nlicon"></div>
-        <h2 class="jg-nlogin-nltitle">JuggleChat</h2>
+        <h2 class="jg-nlogin-nltitle">JuggleGram</h2>
         <span class="fs10">v1.7.24</span>
       </div>
       <div class="jg-nlogin-intro-box jg-nlogin-btnbox">

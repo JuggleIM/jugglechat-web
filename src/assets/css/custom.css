@@ -231,6 +231,7 @@
 }
 .tyn-chat-aside-avatar{
   background-size: 100%;
+  border-radius: 10%;
 }
 .tyn-aside-group{
   padding: 0.2rem 0;
@@ -1325,7 +1326,7 @@
   font-size: 18px;
 }
 .jg-nlogin-btnbox{
-  width: 300px;
+  width: 350px;
 }
 .jg-nlogin-btnbox .form-group{
   width: 100%;
