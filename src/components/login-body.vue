@@ -15,7 +15,7 @@ let juggle = im.getCurrent();
 let context = getCurrentInstance();
 
 const router = useRouter();
-let defalutBtnLabel = '发送';
+let i18n = common.i18n();
 let state = reactive({
   isQRLogin: !utils.isMobile(),
   isLoadingQR: false,
@@ -29,21 +29,23 @@ let state = reactive({
     code: '',
     email: ''
   },
-  btnLabel: defalutBtnLabel,
+  btnLabel: i18n.LOGIN.COMMON.SEND,
   errorMsg: {
     phone: '',
     email: '',
     code: ''
   },
   loginType: LOGIN_TYPE.QRCODE,
-  version: '1.8.0'
+  version: '1.8.0',
+  i18n: i18n,
 });
 
 function onVerifySuccess(result){
   let { data } = result;
+  let { i18n } = state;
   let { user_id, authorization, nickname, im_token } = data;
   if(!im_token){
-    return state.errorMsg.code = '登录失败，IM Token 为空'
+    return state.errorMsg.code = i18n.LOGIN.ERROR.IM_TOKEN_EMPTY;
   }
   let user = { id: user_id, token: im_token, authorization: authorization, name: nickname, isUsed: true };
   Storage.set(STORAGE.USER_TOKEN,  user);
@@ -69,22 +71,22 @@ function onVerifySuccess(result){
 }
 
 function onLogin() {
-  let { user } = state;
+  let { user, i18n } = state;
   let { phone, code } = user;
   if (utils.isEmpty(phone)) {
-    return state.errorMsg.phone = '手机号不能为空';
+    return state.errorMsg.phone = i18n.LOGIN.ERROR.PHONE_EMPTY;
   }
   if(!utils.isPhoneNumber(phone)) {
-    return state.errorMsg.phone = '手机号不正确';
+    return state.errorMsg.phone = i18n.LOGIN.ERROR.PHONE_ERROR;
   }
   if (utils.isEmpty(code)) {
-    return state.errorMsg.code = '验证码不能为空';
+    return state.errorMsg.code = i18n.LOGIN.ERROR.VERIFY_CODE_EMPTY;
   }
   User.verifyCode({ phone, code }).then((result) => {
     let errorCode = result.code;
     if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `登录失败：${errorCode}`,
+        text: `Error: ${errorCode}`,
         icon: 'error'
       });
     }
@@ -96,10 +98,10 @@ function onSend(){
   let { user } = state;
   let { phone } = user;
   if (utils.isEmpty(phone)) {
-    return state.errorMsg.phone = '手机号不可为空';
+    return state.errorMsg.phone = i18n.LOGIN.ERROR.PHONE_EMPTY;
   }
   if (!utils.isPhoneNumber(phone)) {
-    return state.errorMsg.phone = '手机号不正确';
+    return state.errorMsg.phone = i18n.LOGIN.ERROR.PHONE_ERROR;
   }
   if(isSending){
     return;
@@ -109,7 +111,7 @@ function onSend(){
     let errorCode = result.code;
     if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `发送验证码失败：${errorCode}`,
+        text: `Error: ${errorCode}`,
         icon: 'error'
       });
     }
@@ -206,10 +208,10 @@ function onSendEmailCode(){
   let { user } = state;
   let { email } = user;
   if (utils.isEmpty(email)) {
-    return state.errorMsg.email = '邮箱不可为空';
+    return state.errorMsg.email = i18n.LOGIN.ERROR.EMAIL_EMPTY;
   }
   if (!utils.isEmail(email)) {
-    return state.errorMsg.email = '邮箱地址不正确';
+    return state.errorMsg.email = i18n.LOGIN.ERROR.EMAIL_ERROR;
   }
   if(isSendingEmail){
     return;
@@ -219,7 +221,7 @@ function onSendEmailCode(){
     let errorCode = result.code;
     if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `发送验证码失败：${errorCode}`,
+        text: `Error: ${errorCode}`,
         icon: 'error'
       });
     }
@@ -239,19 +241,19 @@ function onEmailLogin() {
   let { user } = state;
   let { email, code } = user;
   if (utils.isEmpty(email)) {
-    return state.errorMsg.email = '手机号不能为空';
+    return state.errorMsg.email = i18n.LOGIN.ERROR.EMAIL_EMPTY;
   }
   if(!utils.isEmail(email)) {
-    return state.errorMsg.email = '手机号不正确';
+    return state.errorMsg.email = i18n.LOGIN.ERROR.EMAIL_ERROR;
   }
   if (utils.isEmpty(code)) {
-    return state.errorMsg.code = '验证码不能为空';
+    return state.errorMsg.code = i18n.LOGIN.ERROR.VERIFY_CODE_EMPTY;
   }
   User.verifyEmailCode({ email, code }).then((result) => {
     let errorCode = result.code;
     if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `登录失败：${errorCode}`,
+        text: `Error: ${errorCode}`,
         icon: 'error'
       });
     }
@@ -270,19 +272,19 @@ function onEmailLogin() {
         <div class="jg-nlogin-loading-box" v-if="state.isShowRefreshQrcode">
           <div class="jg-nlogin-loading" v-if="state.isLoadingQR"></div>
           <div class="jg-nlogin-refresh" v-else>
-            <button class="btn btn-sm btn-success" @click="getLoginQR()">刷新二维码</button>
+            <button class="btn btn-sm btn-success" @click="getLoginQR()">{{ state.i18n.LOGIN.QRCODE.REFRESH }}</button>
           </div>
         </div>
       </div>
       <div class="jg-nlogin-intro-box">
-        <h2 class="jg-nlogin-intro-title">Log in to JuggleGram by QR Code</h2>
+        <h2 class="jg-nlogin-intro-title">{{state.i18n.LOGIN.QRCODE.TITLE}}</h2>
         <ul class="jg-nlogin-intros">
-          <li class="jg-nlogin-intro wr wr-1">Open JuggleGram on your phone</li>
-          <li class="jg-nlogin-intro wr wr-2">Go to Home Page -> QRCode</li>
-          <li class="jg-nlogin-intro wr wr-3">Point your phone at this screen to confirm login</li>
+          <li class="jg-nlogin-intro wr wr-1">{{ state.i18n.LOGIN.QRCODE.ONE_STEP }}</li>
+          <li class="jg-nlogin-intro wr wr-2">{{ state.i18n.LOGIN.QRCODE.TWO_STEP }}</li>
+          <li class="jg-nlogin-intro wr wr-3">{{ state.i18n.LOGIN.QRCODE.THREE_STEP }}</li>
         </ul>
-        <div class="jg-nlogin-button" @click="setLoginType(LOGIN_TYPE.PHONE)"> LOG IN BY PHONE NUMBER </div>
-        <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.EMAIL)"> LOG IN BY EMAIL ADDRESS</div>
+        <div class="jg-nlogin-button" @click="setLoginType(LOGIN_TYPE.PHONE)">{{ state.i18n.LOGIN.PHONE.BTN }}</div>
+        <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.EMAIL)">{{ state.i18n.LOGIN.EMAIL.BTN }}</div>
       </div>
     </div>
 
@@ -295,7 +297,7 @@ function onEmailLogin() {
       <div class="jg-nlogin-intro-box jg-nlogin-btnbox">
         <div class="form-group">
           <div class="form-control-wrap">
-            <input type="text" class="form-control" v-model="state.user.phone" placeholder="输入手机号"
+            <input type="text" class="form-control" v-model="state.user.phone" :placeholder="state.i18n.LOGIN.PHONE.PLACEHOLDER"
               @input="onInput()" @keydown.enter="onLogin()">
           </div>
           <label class="form-label" for="email-address">
@@ -304,7 +306,7 @@ function onEmailLogin() {
         </div>
         <div class="form-group">
           <div class="form-control-wrap jg-login-sms form-control">
-            <input type="text"  v-model="state.user.code" placeholder="万能验证码: 000000"
+            <input type="text"  v-model="state.user.code" :placeholder="state.i18n.LOGIN.PHONE.VERIFYCODE"
               @input="onInput()"  @keydown.enter="onLogin()">
             <div class="jg-login-sendcode" @click="onSend">{{ state.btnLabel }}</div>
           </div>
@@ -314,13 +316,13 @@ function onEmailLogin() {
         </div>
         <div class="form-group">
           <div class="form-control-wrap">
-            <a class="btn btn-primary w-100" @click="onLogin()">登录</a>
+            <a class="btn btn-primary w-100" @click="onLogin()">{{ state.i18n.LOGIN.COMMON.NEXT }}</a>
           </div>
         </div>
 
         <div class="form-group jg-login-btn-group">
-          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.QRCODE)"> LOG IN BY QR CODE </div>
-          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.EMAIL)"> LOG IN BY EMAIL ADDRESS</div>
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.QRCODE)">{{ state.i18n.LOGIN.QRCODE.BTN }} </div>
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.EMAIL)">{{ state.i18n.LOGIN.EMAIL.BTN }}</div>
         </div>
       </div>
     </div>
@@ -334,7 +336,7 @@ function onEmailLogin() {
       <div class="jg-nlogin-intro-box jg-nlogin-btnbox">
         <div class="form-group">
           <div class="form-control-wrap">
-            <input type="text" class="form-control" v-model="state.user.email" placeholder="输入邮箱地址"
+            <input type="text" class="form-control" v-model="state.user.email" :placeholder="state.i18n.LOGIN.EMAIL.PLACEHOLDER"
               @input="onInput()" @keydown.enter="onLogin()">
           </div>
           <label class="form-label" for="email-address">
@@ -343,7 +345,7 @@ function onEmailLogin() {
         </div>
         <div class="form-group">
           <div class="form-control-wrap jg-login-sms form-control">
-            <input type="text"  v-model="state.user.code" placeholder="万能验证码: 000000"
+            <input type="text"  v-model="state.user.code" :placeholder="state.i18n.LOGIN.EMAIL.VERIFYCODE"
               @input="onInput()"  @keydown.enter="onLogin()">
             <div class="jg-login-sendcode" @click="onSendEmailCode">{{ state.btnLabel }}</div>
           </div>
@@ -353,12 +355,12 @@ function onEmailLogin() {
         </div>
         <div class="form-group">
           <div class="form-control-wrap">
-            <a class="btn btn-primary w-100" @click="onEmailLogin()">登录</a>
+            <a class="btn btn-primary w-100" @click="onEmailLogin()">{{ state.i18n.LOGIN.COMMON.NEXT }}</a>
           </div>
         </div>
         <div class="form-group jg-login-btn-group">
-          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.QRCODE)"> LOG IN BY QR CODE </div>
-          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.PHONE)"> LOG IN BY PHONE NUMBER </div>
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.QRCODE)">{{ state.i18n.LOGIN.EMAIL.BTN }}</div>
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.PHONE)">{{ state.i18n.LOGIN.PHONE.BTN }}</div>
         </div>
       </div>
     </div>
