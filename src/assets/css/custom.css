@@ -1360,10 +1360,9 @@
 .jg-nlogin-button:hover{
   background-color: rgb(47 132 217 / 8%);
 }
-.jg-nlogin-num-btn{
-  margin-top: 30px;
+.jg-login-btn-group{
+  margin-top: 2rem;
 }
-
 @keyframes qr-show {
   0% {
     opacity: 0;

@@ -2,7 +2,7 @@
 import { reactive, watch, getCurrentInstance } from "vue";
 import utils from "../common/utils";
 import { useRouter } from "vue-router";
-import { STORAGE, RESPONSE } from "../common/enum";
+import { STORAGE, RESPONSE, LOGIN_TYPE } from "../common/enum";
 import common from "../common/common";
 import Storage from "../common/storage";
 import { User } from "../services/index";
@@ -26,13 +26,17 @@ let state = reactive({
   },
   user: {
     phone: '',
-    code: ''
+    code: '',
+    email: ''
   },
   btnLabel: defalutBtnLabel,
   errorMsg: {
     phone: '',
+    email: '',
     code: ''
-  }
+  },
+  loginType: LOGIN_TYPE.QRCODE,
+  version: '1.8.0'
 });
 
 function onVerifySuccess(result){
@@ -86,7 +90,6 @@ function onLogin() {
     }
     onVerifySuccess(result);
   });
-
 }
 let isSending = false;
 function onSend(){
@@ -99,9 +102,9 @@ function onSend(){
     return state.errorMsg.phone = '手机号不正确';
   }
   if(isSending){
-    isSending = true;
     return;
   }
+  isSending = true;
   User.sendCode({ phone }).then((result) => {
     let errorCode = result.code;
     if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
@@ -122,11 +125,12 @@ function onSend(){
     }, 500);
   });
 }
+
 function onInput() {
-  utils.extend(state.errorMsg, { phone: '', code: '' });
+  utils.extend(state.errorMsg, { phone: '', code: '', email: '' });
 }
-function setQrLogin(isQR){
-  state.isQRLogin = isQR;
+function setLoginType(type){
+  state.loginType = type;
 }
 
 function getLoginQR(){
@@ -182,8 +186,8 @@ function stopPolling(){
 function onShowServerSetting(isShow){
   state.isShowServerSetting = isShow;
 }
-watch(() => state.isQRLogin, (isQR) => {
-  if(isQR){
+watch(() => state.loginType, (type) => {
+  if(utils.isEqual(type, LOGIN_TYPE.QRCODE)){
     startPolling();
   }else{
     stopPolling();
@@ -197,12 +201,70 @@ watch(() => props.isShow, () => {
   }
 })
 
+let isSendingEmail = false;
+function onSendEmailCode(){
+  let { user } = state;
+  let { email } = user;
+  if (utils.isEmpty(email)) {
+    return state.errorMsg.email = '邮箱不可为空';
+  }
+  if (!utils.isEmail(email)) {
+    return state.errorMsg.email = '邮箱地址不正确';
+  }
+  if(isSendingEmail){
+    return;
+  }
+  isSendingEmail = true;
+  User.sendEmailCode({ email }).then((result) => {
+    let errorCode = result.code;
+    if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
+      return context.proxy.$toast({
+        text: `发送验证码失败：${errorCode}`,
+        icon: 'error'
+      });
+    }
+    let seconds = 59;
+    utils.extend(state, { btnLabel: seconds }); 
+    let inteval = setInterval(() => {
+      seconds -= 1;
+      if(utils.isEqual(seconds, 1)){
+        utils.extend(state, { btnLabel: defalutBtnLabel, isSendingEmail: false });
+        return clearInterval(inteval);
+      }
+      utils.extend(state, { btnLabel: seconds });
+    }, 500);
+  });
+}
+function onEmailLogin() {
+  let { user } = state;
+  let { email, code } = user;
+  if (utils.isEmpty(email)) {
+    return state.errorMsg.email = '手机号不能为空';
+  }
+  if(!utils.isEmail(email)) {
+    return state.errorMsg.email = '手机号不正确';
+  }
+  if (utils.isEmpty(code)) {
+    return state.errorMsg.code = '验证码不能为空';
+  }
+  User.verifyEmailCode({ email, code }).then((result) => {
+    let errorCode = result.code;
+    if(!utils.isEqual(errorCode, RESPONSE.SUCCESS)){
+      return context.proxy.$toast({
+        text: `登录失败：${errorCode}`,
+        icon: 'error'
+      });
+    }
+    onVerifySuccess(result);
+  });
+}
 </script>
 
 <template>
   <div class="tyn-root jg-login-container" :class="{ 'tyn-desktop-root': juggle.isDesktop(), 'tyn-web-root': !juggle.isDesktop() }">
     <div class="jg-server-settings wr wr-security-sum" @click="onShowServerSetting(true)" v-if="props.isLogin"></div>
-    <div class="jg-nlogin-main" v-if="state.isQRLogin">
+    
+    <div class="jg-nlogin-main" v-if="utils.isEqual(state.loginType, LOGIN_TYPE.QRCODE)">
       <div class="jg-nlogin-qrbox" :style="{ 'background-image': 'url(data:image/png;base64,' + state.qrcode.img + ')' }">
         <div class="jg-nlogin-icon"></div>
         <div class="jg-nlogin-loading-box" v-if="state.isShowRefreshQrcode">
@@ -219,14 +281,16 @@ watch(() => props.isShow, () => {
           <li class="jg-nlogin-intro wr wr-2">Go to Home Page -> QRCode</li>
           <li class="jg-nlogin-intro wr wr-3">Point your phone at this screen to confirm login</li>
         </ul>
-        <div class="jg-nlogin-button" @click="setQrLogin(false)"> LOG IN BY PHONE NUMBER </div>
+        <div class="jg-nlogin-button" @click="setLoginType(LOGIN_TYPE.PHONE)"> LOG IN BY PHONE NUMBER </div>
+        <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.EMAIL)"> LOG IN BY EMAIL ADDRESS</div>
       </div>
     </div>
-    <div class="jg-nlogin-main" v-else>
+
+    <div class="jg-nlogin-main" v-if="utils.isEqual(state.loginType, LOGIN_TYPE.PHONE)">
       <div class="jg-nlogin-normalbox">
         <div class="jg-nlogin-nlicon"></div>
         <h2 class="jg-nlogin-nltitle">JuggleGram</h2>
-        <span class="fs10">v1.7.24</span>
+        <span class="fs10">v{{ state.version }}</span>
       </div>
       <div class="jg-nlogin-intro-box jg-nlogin-btnbox">
         <div class="form-group">
@@ -254,9 +318,51 @@ watch(() => props.isShow, () => {
           </div>
         </div>
 
-        <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setQrLogin(true)"> LOG IN BY QR CODE </div>
+        <div class="form-group jg-login-btn-group">
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.QRCODE)"> LOG IN BY QR CODE </div>
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.EMAIL)"> LOG IN BY EMAIL ADDRESS</div>
+        </div>
       </div>
     </div>
+    
+    <div class="jg-nlogin-main" v-if="utils.isEqual(state.loginType, LOGIN_TYPE.EMAIL)">
+      <div class="jg-nlogin-normalbox">
+        <div class="jg-nlogin-nlicon"></div>
+        <h2 class="jg-nlogin-nltitle">JuggleGram</h2>
+        <span class="fs10">v{{ state.version }}</span>
+      </div>
+      <div class="jg-nlogin-intro-box jg-nlogin-btnbox">
+        <div class="form-group">
+          <div class="form-control-wrap">
+            <input type="text" class="form-control" v-model="state.user.email" placeholder="输入邮箱地址"
+              @input="onInput()" @keydown.enter="onLogin()">
+          </div>
+          <label class="form-label" for="email-address">
+            <span class="small ms-2 text-danger">{{ state.errorMsg.email }}</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <div class="form-control-wrap jg-login-sms form-control">
+            <input type="text"  v-model="state.user.code" placeholder="万能验证码: 000000"
+              @input="onInput()"  @keydown.enter="onLogin()">
+            <div class="jg-login-sendcode" @click="onSendEmailCode">{{ state.btnLabel }}</div>
+          </div>
+          <label class="form-label">
+            <span class="small ms-2 text-danger">{{ state.errorMsg.code }}</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <div class="form-control-wrap">
+            <a class="btn btn-primary w-100" @click="onEmailLogin()">登录</a>
+          </div>
+        </div>
+        <div class="form-group jg-login-btn-group">
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.QRCODE)"> LOG IN BY QR CODE </div>
+          <div class="jg-nlogin-button jg-nlogin-num-btn"  @click="setLoginType(LOGIN_TYPE.PHONE)"> LOG IN BY PHONE NUMBER </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <ModalServerSetting :is-show="state.isShowServerSetting" @oncancel="onShowServerSetting(false)"></ModalServerSetting>
 </template>
