@@ -6,6 +6,8 @@ import common from "../common/common";
 const props = defineProps(['isShow', 'conversation', 'index', 'x']);
 const emit = defineEmits(["onhide", "onmark", "ontop", "ondisturb", "onremove", "onclearmsg"]);
 
+let CHAT_MENU_I18N =  common.i18n().MAIN.CHAT_MENU;
+
 let juggle = im.getCurrent();
 let { MessageType, UndisturbType } = juggle;
 
@@ -28,7 +30,7 @@ watch(() => props.isShow, (value) => {
     <ul class="tyn-list-links">
       <li class="tyn-list-link">
         <a class="wr wr-read" @click.stop="emit('onmark', props.index)">
-          <span>{{ props.conversation.unreadTag ? '清理未读' : '标记未读' }}</span>
+          <span>{{ props.conversation.unreadTag ? CHAT_MENU_I18N.CLEAR_UNREAD : CHAT_MENU_I18N.MARK_UNREAD }}</span>
         </a>
       </li>
       <li class="tyn-list-link">
@@ -38,7 +40,7 @@ watch(() => props.isShow, (value) => {
           data-bs-toggle="modal"
           @click.stop="emit('ontop', props.conversation, !props.conversation.isTop)"
         >
-          <span>{{ props.conversation.isTop ? '取消置顶' : '置顶会话' }}</span>
+          <span>{{ props.conversation.isTop ? CHAT_MENU_I18N.UNPIN : CHAT_MENU_I18N.PIN }}</span>
         </a>
       </li>
       <li class="tyn-list-link">
@@ -48,7 +50,7 @@ watch(() => props.isShow, (value) => {
           data-bs-toggle="modal"
           @click.stop="emit('ondisturb', props.conversation)"
         >
-          <span>{{ utils.isEqual(props.conversation.undisturbType, UndisturbType.UNDISTURB) ? '免 打 扰' : '取消免打扰' }}</span>
+          <span>{{ utils.isEqual(props.conversation.undisturbType, UndisturbType.UNDISTURB) ? CHAT_MENU_I18N.MUTE : CHAT_MENU_I18N.UNMUTE }}</span>
         </a>
       </li>
       <li class="dropdown-divider"></li>
@@ -58,12 +60,12 @@ watch(() => props.isShow, (value) => {
           data-bs-toggle="modal"
           @click.stop="emit('onremove', props.index)"
         >
-          <span>删除会话</span>
+          <span>{{ CHAT_MENU_I18N.REMOVE }}</span>
         </a>
       </li>
       <li class="tyn-list-link">
         <a href="#" class="wr wr-clear" @click.stop="emit('onclearmsg', props.index)">
-          <span>清空消息</span>
+          <span>{{ CHAT_MENU_I18N.CLEAR_MSG }}</span>
         </a>
       </li>
     </ul>

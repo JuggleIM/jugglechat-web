@@ -10,6 +10,7 @@ import emitter from "../common/emmit";
 const props = defineProps(["isShow"]);
 const emit = defineEmits(["oncancel", "onconfirm"]);
 let context = getCurrentInstance();
+let i18n = common.i18n();
 
 let juggle = im.getCurrent();
 let { ConversationType } = juggle;
@@ -58,7 +59,7 @@ function onSave(index){
   }
   juggle.createConversationTag(item);
   emitter.$emit(EVENT_NAME.ON_CONVERSATION_TAG_CHANGED, { isRemove: false, tag: item })
-  context.proxy.$toast({ text: `保存成功`, icon: 'success' });
+  context.proxy.$toast({ text: i18n.COMMON.SAVE_SUCCESS, icon: 'success' });
 
 }
 function scrollBottom() {
@@ -84,18 +85,18 @@ watch(() => props.isShow, async () => {
       <div class="modal-content border-0">
         <div class="modal-body">
           <div class="jg-modal-header">
-            <div class="title">会话分组</div>
+            <div class="title">{{ i18n.MAIN.TAG.TITLE }}</div>
             <ul class="jg-conversations-tools">
-              <li class="jg-conversation-tool wr wr-cir-add jg-modal-add" @click="onAdd">添加</li>
+              <li class="jg-conversation-tool wr wr-cir-add jg-modal-add" @click="onAdd">{{ i18n.MAIN.TAG.ADD }}</li>
             </ul>
           </div>
           <ul class="tyn-media-list" ref="groups">
             <li v-for="(item, index) in state.list" class="jg-conver-modal-group">
               <div class="jg-conver-group-name" :class="{ 'wr-asterisk jg-text-danger': item.name.length == 0 }">
                 <span class="wr wr-cir-remove jg-text-danger" :class="{'jg-text-disable': item.isInner}" @click="onRemove(index)"></span>
-                <input type="text" class="form-control" placeholder="请输入分组名称（回车保存）" :disabled="item.isInner" v-model="item.name" @blur="onSave(index)" @keydown.enter="onSave(index)">
+                <input type="text" class="form-control" :placeholder="i18n.MAIN.TAG.PLACEHOLDER" :disabled="item.isInner" v-model="item.name" @blur="onSave(index)" @keydown.enter="onSave(index)">
               </div>
-              <div class="jg-conver-group-desc" :class="{'jg-conver-group-desc-custom': !item.isInner}">{{ item.isInner ? '系统分组' : '自定义分组' }}</div>
+              <div class="jg-conver-group-desc" :class="{'jg-conver-group-desc-custom': !item.isInner}">{{ item.isInner ? i18n.MAIN.TAG.SYSTEM : i18n.MAIN.TAG.CUSTOM }}</div>
             </li>
           </ul>
           <ul class="tyn-list-inline gap gap-3 pt-3 tny-content-center">

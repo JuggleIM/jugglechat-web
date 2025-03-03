@@ -16,6 +16,7 @@ let juggle = im.getCurrent();
 let { MessageType, UndisturbType, UserType } = juggle;
 
 let state = reactive({
+  i18n: common.i18n(),
   dropmenuX: 0,
   currentConversation: {}
 });
@@ -151,7 +152,7 @@ async function clearUnreadCount(item, index) {
             <div class="tyn-media-row jg-conversation-title">
               <h6 class="name">
                 {{ item.conversationTitle }}
-                <span class="jg-tag jg-tag-agent" v-if="item.conversationUserType == UserType.BOT">智能体</span>
+                <span class="jg-tag jg-tag-agent" v-if="item.conversationUserType == UserType.BOT">{{ state.i18n.MAIN.AGENT }}</span>
               </h6>
               <span class="wr wr-soundoff jg-conver-mute" v-if="utils.isEqual(item.undisturbType, UndisturbType.DISTURB)"></span>
               <span class="typing" v-if="item.isTyping">typing ...</span>
@@ -184,7 +185,7 @@ async function clearUnreadCount(item, index) {
       </li>
     </ul>
     <div class="tyn-aside-row text-center" v-if="props.conversations.length == 0">
-      <h6>没有记录</h6>
+      <h6>{{ state.i18n.COMMON.LIST_NONE }}</h6>
     </div>
   </div>
 </template>

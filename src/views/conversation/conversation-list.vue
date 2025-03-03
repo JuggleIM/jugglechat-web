@@ -50,6 +50,7 @@ let state = reactive({
   isShowGroupMemberManager: false,
   conversationMap: {},
   currentTag: { id: CONVERATION_TAG_ID.ALL },
+  i18n: common.i18n(),
 });
 emitter.$on(EVENT_NAME.ON_ADDED_FRIEND, (friend) => {
   let { type, id, avatar, name} = friend;
@@ -357,8 +358,8 @@ function onTagConversationChanged({ removes, adds, tag }){
 
           <div class="jg-conversations-header">
             <ul class="jg-conversations-tools jg-convers-tools">
-              <li class="jg-conversation-tool wr" :class="[state.isShowConversationGroup ? 'wr-menu-left' : 'wr-menu-right']" @click="onShowConversationGroup()">消息</li>
-              <li class="jg-conversation-tool wr wr-menu-modify" @click="onShowGroupMemberManager(true)" v-if="state.currentTag.type == CONVERSATION_TAG_TYPE.CUSTOM">会话设置</li>
+              <li class="jg-conversation-tool wr" :class="[state.isShowConversationGroup ? 'wr-menu-left' : 'wr-menu-right']" @click="onShowConversationGroup()">{{ state.i18n.MAIN.CHAT }}</li>
+              <li class="jg-conversation-tool wr wr-menu-modify" @click="onShowGroupMemberManager(true)" v-if="state.currentTag.type == CONVERSATION_TAG_TYPE.CUSTOM">{{ state.i18n.MAIN.CHAT_SETTING }}</li>
             </ul>
           </div>
 
@@ -369,22 +370,12 @@ function onTagConversationChanged({ removes, adds, tag }){
               @mouseleave="onHideTopDrop()"
               @click="onConversation(item)"
             >
-
-              <!-- <div
-                class="tyn-avatar tyn-topitem-avatar"
-                :style="{'background-image': 'url(' + item.conversationPortrait + ')'}"
-                @click.right.prevent="onShowTopDropmenu(index)"
-              ></div> -->
               <Avatar 
                 :cls="'tyn-topitem-avatar tyn-md-avatar'"
                 :avatar="messageUtils.isGroup(item) ? '' :item.conversationPortrait"
                 :name="item.conversationTitle"
                 @click.right.prevent="onShowTopDropmenu(index)">
               </Avatar>
-
-
-
-
               <div class="tyn-topitem-name">{{ item.conversationTitle || 'JG' }}</div>
               <ul class="tyn-media-option-list">
                 <li class="dropdown">
@@ -392,7 +383,7 @@ function onTagConversationChanged({ removes, adds, tag }){
                     <ul class="tyn-list-links">
                       <li>
                         <a class="wr wr-untop" @click.stop="onSetConversationTop(item, false)">
-                          <span>取消置顶</span>
+                          <span>{{ state.i18n.MAIN.CHAT_MENU.UNPIN }}</span>
                         </a>
                       </li>
                     </ul>

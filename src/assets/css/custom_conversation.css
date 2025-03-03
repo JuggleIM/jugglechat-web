@@ -125,6 +125,9 @@
   height: 4rem !important;
   width: 4rem !important;
 }
+.jg-size-rg .inner{
+  font-size: 2rem;
+}
 .jg-mention-msg-name{
 	color: #3390ec;
 	margin: 0 0.2rem;

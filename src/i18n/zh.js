@@ -4,6 +4,7 @@ export let ZH = {
     CANCEL_BTN: '取消',
     SAVE_BTN: '保存',
     SAVE_SUCCESS: '保存成功',
+    OP_SUCCESS: '操作成功',
     YES: '是',
     NO: '否',
     LIST_NONE: '没有更多了'
@@ -115,5 +116,35 @@ export let ZH = {
     NEW_ACCEPTED: '已添加',
     NEW_DECLINED: '已拒绝',
     NEW_EXPIRED: '已过期',
+    START_CHAT: '发起会话',
+    REMOVE_FRIEND: '删除好友',
+    ADD_FRIEND: '添加好友',
+    DETAIL_TITLE: '详情'
+  },
+  MAIN: {
+    CHAT: '消息',
+    CHAT_SETTING: '会话设置',
+    CHAT_MENU: {
+      MARK_UNREAD: '标记未读',
+      CLEAR_UNREAD: '清理未读',
+      PIN: '置顶会话',
+      UNPIN: '取消置顶',
+      MUTE: '免 打 扰',
+      UNMUTE: '取消免打扰',
+      REMOVE: '删除会话',
+      CLEAR_MSG: '清空消息'
+    },
+    AGENT: '智能体',
+    TAG: {
+      SETTING: '设置',
+      TITLE: '会话分组',
+      ADD: '添加',
+      SYSTEM: '系统分组',
+      CUSTOM: '自定义分组',
+      PLACEHOLDER: '请输入分组名称',
+      CHAT: '消息',
+      RECENTLY: '最近会话',
+      SELECTED: '已选会话'
+    }
   }
 };

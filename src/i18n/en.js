@@ -4,6 +4,7 @@ export let EN = {
     CANCEL_BTN: 'Cancel',
     SAVE_BTN: 'Save',
     SAVE_SUCCESS: 'Success',
+    OP_SUCCESS: 'Success',
     YES: 'Yes',
     NO: 'No',
     LIST_NONE: 'No more data'
@@ -115,5 +116,35 @@ export let EN = {
     NEW_ACCEPTED: 'Accepted',
     NEW_DECLINED: 'Declined',
     NEW_EXPIRED: 'Expired',
+    START_CHAT: 'Start Chat',
+    REMOVE_FRIEND: 'Delete Friend',
+    ADD_FRIEND: 'Add Friend',
+    DETAIL_TITLE: 'Details'
+  },
+  MAIN: {
+    CHAT: 'Chats',
+    CHAT_SETTING: 'Chat Settings',
+    CHAT_MENU: {
+      MARK_UNREAD: 'Mark Unread',
+      CLEAR_UNREAD: 'Clear Unread',
+      PIN: 'Pin',
+      UNPIN: 'Unpin',
+      MUTE: 'Mute',
+      UNMUTE: 'Unmute',
+      REMOVE: 'Delete',
+      CLEAR_MSG: 'Clear Messages'
+    },
+    AGENT: 'Agent',
+    TAG: {
+      SETTING: 'Settings',
+      TITLE: 'Chat Tags',
+      ADD: 'Add',
+      SYSTEM: 'System',
+      CUSTOM: 'Custom',
+      PLACEHOLDER: 'Please enter a tag name',
+      CHAT: 'Chats',
+      RECENTLY: 'Recently Chats',
+      SELECTED: 'Selected Chats'
+    }
   }
 };

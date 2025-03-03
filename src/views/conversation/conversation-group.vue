@@ -13,6 +13,7 @@ const props = defineProps(["isShow"]);
 const emit = defineEmits(["oncancel", "onchange"]);
 let juggle = im.getCurrent();
 let { MessageType, Event } = juggle;
+let i18n = common.i18n();
 
 let state = reactive({
   isRemote: false,
@@ -107,7 +108,7 @@ watch(() => props.isShow, async () => {
     <div class="jg-conversations-header">
       <ul class="jg-conversations-tools">
         <li></li>
-        <li class="jg-conversation-tool wr wr-setting" @click="onShowGroupManager(true)">设置</li>
+        <li class="jg-conversation-tool wr wr-setting" @click="onShowGroupManager(true)">{{ i18n.MAIN.TAG.SETTING }}</li>
       </ul>
     </div>
     <ul class="jg-conver-groups">

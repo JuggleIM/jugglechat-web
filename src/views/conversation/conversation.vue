@@ -510,8 +510,8 @@ function sendImage(e) {
     sender: juggle.getCurrentUser(),
     name: MessageType.IMAGE,
     percent: 0,
-    localUrl: url,
-    tid: utils.getUUID()
+    sentState: SentState.SENDING,
+    localUrl: url
   };
 
   var img = new Image();
@@ -522,19 +522,22 @@ function sendImage(e) {
 
     juggle.sendImageMessage(message, {
       onbefore: (msg) => {
+        utils.extend(msg, { sentTime: Date.now(), isSender: true, sentState: -1 })
         state.messages.unshift(msg);
       },
-      onprogress: ({ percent }) => {
+      onprogress: ({ percent, message }) => {
         let propMsg = state.messages.filter((msg) => {
           return utils.isEqual(msg.tid, message.tid);
         })[0];
-        utils.extend(propMsg, { percent });
+        utils.extend(propMsg, { percent, sentState: SentState.SENDING });
       }
     }).then(({ tid, messageId, sentTime, content }) => {
-      let propMsg = state.messages.filter((msg) => {
+      let index = utils.find(state.messages, (msg) => {
         return utils.isEqual(msg.tid, tid);
-      })[0];
-      utils.extend(propMsg, { messageId, sentTime, content });
+      })
+      let propMsg = state.messages[index];
+      propMsg.sentState = -1;
+      utils.extend(propMsg, { messageId, sentTime, content, sentState: SentState.SUCCESS });
       e.target.value = '';
     }, (error) => {
       console.log(error)
