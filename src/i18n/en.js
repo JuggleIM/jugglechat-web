@@ -258,5 +258,11 @@ export let EN = {
   USER_LANGUAGE: {
     TITLE: 'Languages',
     APP: 'Language'
+  },
+  TRANSLATE: {
+    TITLE: 'Translate',
+    DESC: 'Auto Translate',
+    ORIGIN_TEXT: 'Origin Language',
+    TRAGET_TEXT: 'Target Language'
   }
 };

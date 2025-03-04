@@ -118,7 +118,7 @@ let GROUP_ROLE = {
   MANGENT: 2
 };
 let LANGUAGES = [
-  { title: '自动检测', name: 'auto' },
+  { title: 'Auto', name: 'auto' },
   { title: '简体中文', name: 'zh-CHS' },
   { title: '繁體中文', name: 'zh-CHT' },
   { title: 'English', name: 'en' },

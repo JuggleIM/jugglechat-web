@@ -258,5 +258,11 @@ export let ZH = {
   USER_LANGUAGE: {
     TITLE: '语言设置',
     APP: '应用语言'
+  },
+  TRANSLATE: {
+    TITLE: '翻译设置',
+    DESC: '消息接收自动翻译',
+    ORIGIN_TEXT: '目标语言',
+    SOURCE_TEXT: '源语言'
   }
 };
