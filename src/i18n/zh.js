@@ -55,7 +55,6 @@ export let ZH = {
       CONTACT: '通讯录',
       SETTING: '设置',
       FAV: '收藏',
-
       USER_SETTING: '用户设置',
       INFO_UPDATE: '信息修改',
       ACCOUNT_MANAGE: '账号管理',
@@ -79,6 +78,7 @@ export let ZH = {
     SETTING: '用户设置',
     INFO_UPDATE: '用户修改',
     FAVORITE: '我的收藏',
+    LANGUAGE: '语言设置',
     QRCODE: '我的二维码',
     SCANQR_DESC: '扫一扫二维码，加我为好友',
     ACCOUNT: '账号管理',
@@ -160,7 +160,8 @@ export let ZH = {
       CALL: '[音视频通话]',
       AGENT: '[智能体]',
       RECALL: '{name} 撤回了一条消息',
-    }
+    },
+    NEW_FRIEND: '新朋友'
   },
   MESSAGE_CTX: {
     AI: '智能回复',
@@ -253,5 +254,9 @@ export let ZH = {
   },
   MODAL_GROUP: {
     ADD_MEMBER_TITLE: '添加成员'
+  },
+  USER_LANGUAGE: {
+    TITLE: '语言设置',
+    APP: '应用语言'
   }
 };

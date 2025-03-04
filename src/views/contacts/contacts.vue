@@ -20,30 +20,40 @@ import emitter from "../../common/emmit";
 
 let juggle = im.getCurrent();
 let { ConversationType, Event, ConnectionState } = juggle;
-let i18n = common.i18n();
 
-let CONTACT_I18N = i18n.CONTACT;
-
-let tabs = [
-    { id: Date.now(), name: CONTACT_I18N.FRIEND, type: CONTACT_TYPE.FRIEND, icon: 'contact', isActive: true },
-    { id: SYS_CONVERSATION_FRIEND, name: CONTACT_I18N.NEW_FRIEND, type: CONTACT_TYPE.NEW_FRIEND, unreadCount: 0, icon: 'adduser', isActive: false },
-    { id: Date.now(), name: CONTACT_I18N.GROUP, type: CONTACT_TYPE.GROUP, icon: 'group', isActive: false },
-    { id: Date.now(), name: CONTACT_I18N.AGENT, type: CONTACT_TYPE.BOT, icon: 'bot', isActive: false },
-  ];
 let contacts = [];
 let groups = [];
 let newContacts = [];
 const context = getCurrentInstance();
 let state = reactive({
-  tabs: tabs,
-  currentTab: tabs[0].type,
+  tabs: getTabs(),
+  currentTab: getTabs()[0].type,
   contacts: contacts,
   groups: groups,
   currentList: contacts,
   current: {},
   isShowAddFriend: false,
   isShowDetail: false,
+  i18n: common.i18n(),
 });
+
+function getTabs(){
+  let CONTACT_I18N = common.i18n().CONTACT;
+  return [
+    { id: Date.now(), name: CONTACT_I18N.FRIEND, type: CONTACT_TYPE.FRIEND, icon: 'contact', isActive: true },
+    { id: SYS_CONVERSATION_FRIEND, name: CONTACT_I18N.NEW_FRIEND, type: CONTACT_TYPE.NEW_FRIEND, unreadCount: 0, icon: 'adduser', isActive: false },
+    { id: Date.now(), name: CONTACT_I18N.GROUP, type: CONTACT_TYPE.GROUP, icon: 'group', isActive: false },
+    { id: Date.now(), name: CONTACT_I18N.AGENT, type: CONTACT_TYPE.BOT, icon: 'bot', isActive: false },
+  ];
+}
+
+emitter.$on(EVENT_NAME.ON_APP_LANGUAGE_CHANGED, () => {
+  utils.extend(state, {
+    i18n: common.i18n(),
+    tabs: getTabs()
+  })
+});
+
 
 function onConversationChanged({ conversations }){
   utils.forEach(conversations, (conversation) => {
@@ -151,9 +161,9 @@ function getNewFriends(start = 0){
       let _user = target_user;
       let avatar = target_user.avatar || '';
       let username = target_user.nickname || target_user.user_id;
-      let content = utils.templateFormat(CONTACT_I18N.USER_ADD_SELF, { name: username });
+      let content = utils.templateFormat(state.i18n.CONTACT.USER_ADD_SELF, { name: username });
       if(is_sponsor){
-        content = utils.templateFormat(CONTACT_I18N.SELF_ADD_USER, { name: username })
+        content = utils.templateFormat(state.i18n.CONTACT.SELF_ADD_USER, { name: username })
       }
       return {
         id: utils.getUUID(),
@@ -176,11 +186,17 @@ function getNewFriends(start = 0){
     state.currentList = newContacts;
   });
 }
-let statusMap = {};
-statusMap[FRIEND_APPLY_STATUS.APPLYING] = CONTACT_I18N.NEW_APPLYING;
-statusMap[FRIEND_APPLY_STATUS.ACCEPTED] = CONTACT_I18N.NEW_ACCEPTED;
-statusMap[FRIEND_APPLY_STATUS.DECLINED] = CONTACT_I18N.NEW_DECLINED;
-statusMap[FRIEND_APPLY_STATUS.EXPIRED] = CONTACT_I18N.NEW_DECLINED;
+
+
+function getStatusMap(){
+  let statusMap = {};
+  let CONTACT_I18N = common.i18n().CONTACT;
+  statusMap[FRIEND_APPLY_STATUS.APPLYING] = CONTACT_I18N.NEW_APPLYING;
+  statusMap[FRIEND_APPLY_STATUS.ACCEPTED] = CONTACT_I18N.NEW_ACCEPTED;
+  statusMap[FRIEND_APPLY_STATUS.DECLINED] = CONTACT_I18N.NEW_DECLINED;
+  statusMap[FRIEND_APPLY_STATUS.EXPIRED] = CONTACT_I18N.NEW_DECLINED; 
+  return statusMap; 
+}
 function onAddFriend({ item }){
   item.status = FRIEND_APPLY_STATUS.ACCEPTED;
   item.statusName = statusMap[item.status];
@@ -197,7 +213,7 @@ function onRemoveFriend({ item }){
   onShowDetail(false);
 }
 function getFriendApplyName(status){
-  return statusMap[status] || '';
+  return getStatusMap()[status] || '';
 }
 function getFriends(startUserId = ''){
   if(!utils.isEmpty(contacts) && utils.isEmpty(startUserId)){
@@ -286,7 +302,7 @@ getFriends();
                   <div class="jg-friend-applystatus" v-if="utils.isEqual(item.type, CONTACT_TYPE.NEW_FRIEND)">{{ item.statusName }}</div>
                 </div>
               </li>
-              <li class="tyn-aside-item js-toggle-main name tyn-aside-nothing" v-if="state.currentList.length == 0">{{ i18n.COMMON.LIST_NONE }}</li>
+              <li class="tyn-aside-item js-toggle-main name tyn-aside-nothing" v-if="state.currentList.length == 0">{{ state.i18n.COMMON.LIST_NONE }}</li>
             </ul>
           </div>
         </div>

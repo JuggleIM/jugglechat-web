@@ -187,6 +187,7 @@
   bottom: 54px;
   padding: 0;
   background-color: #FAFAFA;
+  z-index: 1055;
 }
 
 .tyn-replies{

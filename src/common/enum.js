@@ -15,7 +15,9 @@ let EVENT_NAME = {
   ON_CONVERSATION_TAG_CHANGED: 'on_conversation_tag_changed',
 
   ON_SHOW_CALL_DIALOG: 'on_show_call_dialog',
-  ON_CALL_FINISHED: 'on_call_finished'
+  ON_CALL_FINISHED: 'on_call_finished',
+
+  ON_APP_LANGUAGE_CHANGED: 'on_app_language_changed'
 };
 export let STORAGE = {
   PREFIX: 'jgweb',
@@ -23,6 +25,7 @@ export let STORAGE = {
   SERVER_SETTING: 'server_setting',
   TRANSLATE_CONF: 'translate_conf',
   USERS: 'users_auth',
+  APP_LANGUAGE: 'app_language'
 }
 let TRANSFER_TYPE = {
   NONE: -1,
@@ -139,6 +142,7 @@ let ASIDE_MENU_TYPE = {
   USER_FAV: 12,
   USER_AGREEMENT: 13,
   USER_PRIVACY: 14,
+  LANGUAGE: 15
 };
 
 let USER_AGREEMENT = {

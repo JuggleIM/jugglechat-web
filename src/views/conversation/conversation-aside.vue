@@ -47,8 +47,15 @@ let state = reactive({
 });
 utils.extend(state, { switches: getSwitches() })
 
+emitter.$on(EVENT_NAME.ON_APP_LANGUAGE_CHANGED, () => {
+  utils.extend(state, {
+    i18n: common.i18n(),
+    switches: getSwitches()
+  })
+});
+
 function getSwitches(){
-  let { i18n } = state;
+  let i18n = common.i18n();
   return [
     { uid: ASIDER_SETTING_SWITCH.TOP, title: i18n.ASIDER_CONVERSATION.TOP, isOpen: false, isShow: true },
     { uid: ASIDER_SETTING_SWITCH.MUTE, title: i18n.ASIDER_CONVERSATION.MUTE, isOpen: false, isShow: true },

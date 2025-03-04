@@ -52,6 +52,13 @@ let state = reactive({
   currentTag: { id: CONVERATION_TAG_ID.ALL },
   i18n: common.i18n(),
 });
+
+emitter.$on(EVENT_NAME.ON_APP_LANGUAGE_CHANGED, () => {
+  utils.extend(state, {
+    i18n: common.i18n()
+  })
+});
+
 emitter.$on(EVENT_NAME.ON_ADDED_FRIEND, (friend) => {
   let { type, id, avatar, name} = friend;
   let conversation = {
@@ -61,7 +68,7 @@ emitter.$on(EVENT_NAME.ON_ADDED_FRIEND, (friend) => {
     conversationPortrait: avatar,
     latestMessage: { sentTime: 0 },
     f_mentionContent: '',
-    shortName: '新朋友',
+    shortName: common.i18n().MAIN.NEW_FRIEND,
   }
   onConversationChanged({ conversations: [conversation] })
   state.currentConversation = conversation;
@@ -141,7 +148,7 @@ im.connect(user, {
   success: async (_user) => {
     console.log("conversation connect success", _user);
     // let { tags = [] } = await juggle.getConversationTags();
-    let tags = [{id: CONVERATION_TAG_ID.ALL, name: '消息'}]
+    let tags = [{id: CONVERATION_TAG_ID.ALL, name: common.i18n().MAIN.CHAT}]
     utils.forEach(tags, (tag) => {
       let map = {};
       map[tag.id] = [];

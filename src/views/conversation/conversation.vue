@@ -86,6 +86,13 @@ let state = reactive({
   pinnedMessage: {},
 });
 
+
+emitter.$on(EVENT_NAME.ON_APP_LANGUAGE_CHANGED, () => {
+  utils.extend(state, {
+    i18n: common.i18n()
+  })
+});
+
 juggle.once(Event.MESSAGE_RECEIVED, (message) => {
   console.log('---------', message)
   if (conversationTools.isSameConversation(message, state)) {

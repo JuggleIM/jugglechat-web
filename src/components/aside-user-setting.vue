@@ -12,6 +12,7 @@ import AsiderUserAccount from "./aside-user-account.vue";
 import AsiderQrCode from "./aside-qrcode.vue";
 import AsideFavoriteMsg from "./aside-msg-favorite.vue";
 import AsideUserAgreement from "./aside-user-agreement.vue";
+import AsideLanguage from "./aside-language.vue";
 
 import { User } from "../services/index";
 import { RESPONSE, STORAGE, ASIDE_MENU_TYPE, EVENT_NAME, USER_AGREEMENT } from "../common/enum";
@@ -31,9 +32,17 @@ let state = reactive({
   isShowUserQrcode: false,
   isShowFavoriteMsg: false,
   isShowUserAgreement: false,
+  isShowLanguage: false,
   userAgreentUrl: '',
   userAgreentTitle: '',
   i18n: common.i18n()
+});
+
+emitter.$on(EVENT_NAME.ON_APP_LANGUAGE_CHANGED, () => {
+  utils.extend(state, {
+    cards: common.getSettingCards(),
+    i18n: common.i18n()
+  })
 });
 
 function onLogout(){
@@ -63,6 +72,9 @@ function onClick(menu){
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_PRIVACY)){
     onShowUserAgreement(true, USER_AGREEMENT.PRIVACY, state.i18n.USER_SETTING.USER_PRIVACY);
   }
+  if(utils.isEqual(event, ASIDE_MENU_TYPE.LANGUAGE)){
+    onShowLanguage(true);
+  }
   if(utils.isEqual(event, ASIDE_MENU_TYPE.USER_LOGOUT)){
     emitter.$emit(EVENT_NAME.UN_UNATHORIZED);
   }
@@ -84,6 +96,9 @@ function onShowUserSettingAsider(isShow){
 }
 function onShowAccountAsider(isShow){
   state.isShowAccountAsider = isShow;
+}
+function onShowLanguage(isShow){
+  state.isShowLanguage = isShow;
 }
 function onCancel() {
   emit('oncancel', {});
@@ -146,5 +161,11 @@ emitter.$on(EVENT_NAME.ON_USER_INFO_UPDATE, ({ user }) => {
     :uid="state.user.id"
     @oncancel="onShowUserQrCode(false)">
   </AsiderQrCode>
+
+  <AsideLanguage
+    :is-show="state.isShowLanguage"
+    :right="0"
+    @oncancel="onShowLanguage(false)">
+  </AsideLanguage>
 
 </template>

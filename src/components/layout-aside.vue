@@ -50,6 +50,15 @@ utils.extend(state, {
   userMenus: getUserMenus(),
 })
 
+emitter.$on(EVENT_NAME.ON_APP_LANGUAGE_CHANGED, () => {
+  utils.extend(state, {
+    i18n: common.i18n(),
+    settingMenus: getSettingMenus(),
+    addMenus: getAddMenus(),
+    userMenus: getUserMenus(),
+  })
+});
+
 function onShowAddMenu(isShow){
   state.isShowAddMenu = isShow;
 }
@@ -186,7 +195,7 @@ watch(useRouterCurrent, (value) => {
 });
 
 function getSettingMenus(){
-  let { i18n } = state;
+  let i18n = common.i18n();
   let HEADER_MENU = i18n.HEADER.MENU;
   return [
     { id: `${Date.now()}`, title: HEADER_MENU.CHAT, type: 'top', icon: 'message', event: ASIDE_MENU_TYPE.MESSAGE, name: 'ConversationList', isActive: utils.isEqual(path, '/conversation') },
@@ -194,7 +203,7 @@ function getSettingMenus(){
   ]
 }
 function getAddMenus(){
-  let { i18n } = state;
+  let i18n = common.i18n();
   let HEADER_MENU = i18n.HEADER.MENU;
   return [
     { name: HEADER_MENU.CREATE_FRIREND, icon: 'adduser', event: ASIDE_MENU_TYPE.ADD_FRIREND },
@@ -202,7 +211,7 @@ function getAddMenus(){
   ];
 }
 function getUserMenus(){
-  let { i18n } = state;
+  let i18n = common.i18n();
   let HEADER_MENU = i18n.HEADER.MENU;
   return [
     { name: HEADER_MENU.USER_SETTING, icon: 'config', event: ASIDE_MENU_TYPE.USER_SETTING },

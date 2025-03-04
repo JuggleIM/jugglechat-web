@@ -55,7 +55,6 @@ export let EN = {
       CONTACT: 'Contacts',
       SETTING: 'Settings',
       FAV: 'Favorites',
-
       USER_SETTING: 'User Setting',
       INFO_UPDATE: 'User Modify',
       ACCOUNT_MANAGE: 'Add Accounts',
@@ -82,6 +81,7 @@ export let EN = {
     QRCODE: 'My QR Code',
     SCANQR_DESC: 'Scan QR Code add me as a friend',
     ACCOUNT: 'Accounts',
+    LANGUAGE: 'Languages',
     USER_AGREEMENT: 'User Agreement',
     USER_PRIVACY: 'User Privacy',
     LOGOUT: 'Log Out'
@@ -160,7 +160,8 @@ export let EN = {
       CALL: '[Call]',
       AGENT: '[Agent]',
       RECALL: '{name} has recall a message',
-    }
+    },
+    NEW_FRIEND: 'New Friend'
   },
   MESSAGE_CTX: {
     AI: 'Ask AI',
@@ -253,5 +254,9 @@ export let EN = {
   },
   MODAL_GROUP: {
     ADD_MEMBER_TITLE: 'ADD Members'
+  },
+  USER_LANGUAGE: {
+    TITLE: 'Languages',
+    APP: 'Language'
   }
 };

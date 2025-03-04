@@ -13,12 +13,12 @@ const props = defineProps(["isShow"]);
 const emit = defineEmits(["oncancel", "onchange"]);
 let juggle = im.getCurrent();
 let { MessageType, Event } = juggle;
-let i18n = common.i18n();
 
 let state = reactive({
   isRemote: false,
   groups: [],
   isShowGroupManager: false,
+  i18n: common.i18n()
 });
 
 function onSelected(item, index){
@@ -94,10 +94,11 @@ watch(() => props.isShow, async () => {
   if(props.isShow){
     let { tags = [] } = await juggle.getConversationTags();
     // let tags = [{id: CONVERATION_TAG_ID.ALL, name: '消息'}];
+    state.i18n = common.i18n();
     if(!state.isRemote){
       state.isRemote = true;
-      state.groups = common.formatTags(tags);
     }
+    state.groups = common.formatTags(tags);
   }
 });
 
@@ -108,7 +109,7 @@ watch(() => props.isShow, async () => {
     <div class="jg-conversations-header">
       <ul class="jg-conversations-tools">
         <li></li>
-        <li class="jg-conversation-tool wr wr-setting" @click="onShowGroupManager(true)">{{ i18n.MAIN.TAG.SETTING }}</li>
+        <li class="jg-conversation-tool wr wr-setting" @click="onShowGroupManager(true)">{{ state.i18n.MAIN.TAG.SETTING }}</li>
       </ul>
     </div>
     <ul class="jg-conver-groups">

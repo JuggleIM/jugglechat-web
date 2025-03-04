@@ -2,8 +2,9 @@ import utils from "./utils";
 import { User, Group, Friend } from "../services/index";
 import html2canvas from 'html2canvas';
 import im from './im';
-import { IGNORE_CONVERSATIONS, FILE_TYPE, ASIDE_MENU_TYPE } from "../common/enum"
+import { IGNORE_CONVERSATIONS, FILE_TYPE, ASIDE_MENU_TYPE, STORAGE } from "../common/enum"
 import languages from "../i18n/i18n";
+import Storage from "./storage";
 
 import  MarkdownIt from 'markdown-it';
 import { emojis } from "./emoji";
@@ -294,7 +295,9 @@ function isGroup(message) {
 }
 
 function i18n(){
-  return languages.en;
+  let current = Storage.get(STORAGE.APP_LANGUAGE);
+  let key = current.value || 'en';
+  return languages[key];
 }
 
 function getSettingCards(){
@@ -306,6 +309,7 @@ function getSettingCards(){
       { name: USER_SETTING.INFO_UPDATE, icon: 'operate', event: ASIDE_MENU_TYPE.USER_UPDATE },
       { name: USER_SETTING.FAVORITE, icon: 'fav', event: ASIDE_MENU_TYPE.USER_FAV },
       { name: USER_SETTING.QRCODE, icon: 'qrcode', event: ASIDE_MENU_TYPE.USER_QRCODE },
+      { name: USER_SETTING.LANGUAGE, icon: 'translate', event: ASIDE_MENU_TYPE.LANGUAGE },
       ] 
     },
     { tag: 2, 
