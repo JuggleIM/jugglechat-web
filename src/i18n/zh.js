@@ -219,4 +219,39 @@ export let ZH = {
 		TRAN_OWNER: '{name} 成为了群主',
 		RENAME: '{name} 修改群名称为 {groupName}',
 	},
+  ASIDER_CONVERSATION: {
+    TITLE: '会话详情',
+    TOP: '会话置顶',
+    MUTE: '消息免打扰',
+    BAN: '群组全局禁言',
+    HISTORY: '新人入群查看历史',
+    NOTICE_SUCCESS: '发布成功',
+    QUIT_GROUP_SUCCESS: '退群成功',
+    MUTE_SUCCESS: '禁言成功',
+    SET_SUCCESS: '设置成功',
+    SAVE_SUCCESS: '保存成功',
+    CLEAR_MESSAGE: '是否清空历史消息？',
+    ADD: '添加',
+    REMOVE: '移除',
+    GROUP_NAME: '群聊名称',
+    GROUP_NAME_PLACEHOLDER: '输入群聊名称',
+
+    GROUP_NOTICE: '群公告',
+    GROUP_NOTICE_NONE: '未设置群公告',
+
+    GROUP_NICKNAME: '我在本群的昵称',
+    GROUP_NICKNAME_PLACEHOLDER: '仅在本群可见',
+    TRANSFER_GROUP_OWNER: '转让群主',
+    TRANSLATE_TITLE: '接收消息自动翻译',
+    GROUP_QRCODE: '群组二维码',
+    GROUP_QRCODE_DESC: '扫一扫群二维码，立刻加入群组',
+    CLEAR_MSG_BTN: '清空历史消息',
+    GROUP_QUIT: '退出群聊',
+  },
+  MODAL: {
+    TIP: '提醒',
+  },
+  MODAL_GROUP: {
+    ADD_MEMBER_TITLE: '添加成员'
+  }
 };

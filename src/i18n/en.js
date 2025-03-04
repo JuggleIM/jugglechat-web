@@ -218,5 +218,40 @@ export let EN = {
 		LEAVE: '{name} left the group',
 		TRAN_OWNER: '{name} became the group owner',
 		RENAME: '{name} changed the group name to {groupName}',
+  },
+  ASIDER_CONVERSATION: {
+    TITLE: 'Conversation',
+    TOP: 'Pin',
+    MUTE: 'Chat Mute',
+    BAN: 'Group Mute',
+    HISTORY: 'View previous msgs',
+    NOTICE_SUCCESS: 'Published Success',
+    QUIT_GROUP_SUCCESS: 'Quit Success',
+    MUTE_SUCCESS: 'Mute Success',
+    SET_SUCCESS: 'Set Success',
+    SAVE_SUCCESS: 'Save Success',
+    CLEAR_MESSAGE: 'Clear all the historical messages？',
+    ADD: 'Add',
+    REMOVE: 'Remove',
+    GROUP_NAME: 'Group Name',
+    GROUP_NAME_PLACEHOLDER: 'Please enter group name',
+
+    GROUP_NOTICE: 'Group Notice',
+    GROUP_NOTICE_NONE: 'No content',
+
+    GROUP_NICKNAME: 'My Group Nickname',
+    GROUP_NICKNAME_PLACEHOLDER: 'Only visible in this group',
+    TRANSFER_GROUP_OWNER: 'Transfer Group Owner',
+    TRANSLATE_TITLE: 'Auto Translate Message',
+    GROUP_QRCODE: 'Group QR Code',
+    GROUP_QRCODE_DESC: "Scan the QR code and join the group",
+    CLEAR_MSG_BTN: 'Clear Messages',
+    GROUP_QUIT: 'Quit Group',
+  },
+  MODAL: {
+    TIP: 'Tip',
+  },
+  MODAL_GROUP: {
+    ADD_MEMBER_TITLE: 'ADD Members'
   }
 };

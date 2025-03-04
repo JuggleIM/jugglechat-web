@@ -29,6 +29,7 @@ let juggle = im.getCurrent();
 let { MessageType, ConversationType, UndisturbType } = juggle;
 
 let state = reactive({
+  i18n: common.i18n(),
   members: [],
   isShowFriend: false,
   isShowGroupNotice: false,
@@ -42,15 +43,19 @@ let state = reactive({
   groupName: props.conversation.conversationTitle,
   groupDisplayName: '',
   groupNoticeContent: '',
-
-  switches: [
-    { uid: ASIDER_SETTING_SWITCH.TOP, title: '会话置顶', isOpen: false, isShow: true },
-    { uid: ASIDER_SETTING_SWITCH.MUTE, title: '消息免打扰', isOpen: false, isShow: true },
-    { uid: ASIDER_SETTING_SWITCH.BAN, title: '群组全局禁言', isOpen: props.group, isShow: false },
-    { uid: ASIDER_SETTING_SWITCH.HISTORY, title: '新人入群查看历史', isOpen: props.group, isShow: false },
-  ]
+  switches: []
 });
+utils.extend(state, { switches: getSwitches() })
 
+function getSwitches(){
+  let { i18n } = state;
+  return [
+    { uid: ASIDER_SETTING_SWITCH.TOP, title: i18n.ASIDER_CONVERSATION.TOP, isOpen: false, isShow: true },
+    { uid: ASIDER_SETTING_SWITCH.MUTE, title: i18n.ASIDER_CONVERSATION.MUTE, isOpen: false, isShow: true },
+    { uid: ASIDER_SETTING_SWITCH.BAN, title: i18n.ASIDER_CONVERSATION.BAN, isOpen: props.group, isShow: false },
+    { uid: ASIDER_SETTING_SWITCH.HISTORY, title: i18n.ASIDER_CONVERSATION.HISTORY, isOpen: props.group, isShow: false },
+  ];
+}
 function onShowFriendAdd(isShow) {
   state.isShowFriend = isShow;
 }
@@ -135,7 +140,12 @@ function onConfirmGroupCreate({ friends }) {
   });
 }
 
+let isComposing = false;
 function onSaveGroup(){
+  if(isComposing){
+    return;
+  }
+  isComposing = false;
   let { conversationId, conversationTitle, conversationPortrait } = props.conversation;
   let { groupName } = state;
   if(utils.isEqual(groupName, conversationTitle)){
@@ -150,8 +160,12 @@ function onSaveGroup(){
 }
 
 function onSaveGroupDisplayName(){
+  if(isComposing){
+    return;
+  }
+  isComposing = false;
   let { conversationId } = props.conversation;
-  let { groupDisplayName  } = state;
+  let { groupDisplayName, i18n } = state;
   let params = {
     group_id: conversationId,
     grp_display_name: groupDisplayName
@@ -160,12 +174,12 @@ function onSaveGroupDisplayName(){
     let { code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `修改失败：${code}`,
+        text: `Error：${code}`,
         icon: 'error'
       });
     }
     context.proxy.$toast({
-      text: `保存成功`,
+      text: i18n.ASIDER_CONVERSATION.SAVE_SUCCESS,
       icon: 'success'
     });
   });
@@ -181,12 +195,12 @@ function onUpdateNotice({ content }){
     let { code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `发布公告失败：${code}`,
+        text: `Error：${code}`,
         icon: 'error'
       });
     }
     context.proxy.$toast({
-      text: `发布公告成功`,
+      text: state.i18n.ASIDER_CONVERSATION.NOTICE_SUCCESS,
       icon: 'success'
     });
   });
@@ -199,12 +213,12 @@ function onQuitGroup(){
     let { code } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `退群失败：${code}`,
+        text: `Error：${code}`,
         icon: 'error'
       });
     }
     context.proxy.$toast({
-      text: `退群成功`,
+      text: state.i18n.ASIDER_CONVERSATION.QUIT_GROUP_SUCCESS,
       icon: 'success'
     });
     emit('onquitgroup', props.conversation)
@@ -212,9 +226,9 @@ function onQuitGroup(){
 }
 function onClearMessages(){
   context.proxy.$showModal({
-    title: '提醒',
+    title: state.i18n.MODAL.TIP,
     icon: 'error',
-    content: '是否清空历史消息?',
+    content: state.i18n.ASIDER_CONVERSATION.CLEAR_MESSAGE,
     onCancel: () => { },
     onConfirm: () => {
       emit('onclearmsg', {});
@@ -245,12 +259,12 @@ function setGroupBan({ isOpen }){
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
       updateSwitchValue(ASIDER_SETTING_SWITCH.BAN, !isOpen, { isShow: true });
       return context.proxy.$toast({
-        text: `禁言失败：${code}`,
+        text: `Error：${code}`,
         icon: 'error'
       });
     }
     context.proxy.$toast({
-      text: `禁言成功`,
+      text: state.i18n.ASIDER_CONVERSATION.MUTE_SUCCESS,
       icon: 'success'
     });
     emit('onbangroup', isOpen);
@@ -263,12 +277,12 @@ function openGroupHistory({ num }){
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
       updateSwitchValue(ASIDER_SETTING_SWITCH.HISTORY, !num, { isShow: true });
       return context.proxy.$toast({
-        text: `设置失败：${code}`,
+        text: `Error: ${code}`,
         icon: 'error'
       });
     }
     context.proxy.$toast({
-      text: `设置成功`,
+      text: state.i18n.ASIDER_CONVERSATION.SET_SUCCESS,
       icon: 'success'
     });
   });
@@ -342,10 +356,16 @@ watch(() => props.isShow, () => {
     state.members.push(props.members[0]);
   }
 });
+function onCompositionStart() {
+  isComposing = true;
+}
+function  onCompositionEnd() {
+  isComposing = false;
+}
 </script> 
 
 <template>
-  <Asider :is-show="props.isShow" :title="'会话详情'" @oncancel="onCancel" :right="1">
+  <Asider :is-show="props.isShow" :title="state.i18n.ASIDER_CONVERSATION.TITLE" @oncancel="onCancel" :right="1">
     <div class="tyn-media-group tyn-media-vr tyn-media-center">
       <div class="tyn-aside-members">
         <div class="tyn-aside-member" v-for="member in state.members">
@@ -356,12 +376,12 @@ watch(() => props.isShow, () => {
         </div>
         <div class="tyn-aside-member" @click="onShowFriendAdd(true)">
           <div class="tyn-media tyn-size-md tyn-chat-aside-avatar wr wr-plus border"></div>
-          <div class="tyn-aside-member-name">添加</div>
+          <div class="tyn-aside-member-name">{{ state.i18n.ASIDER_CONVERSATION.ADD }}</div>
         </div>
         <div class="tyn-aside-member" @click="onShowMemberRemove(props.conversation.conversationId)"
           v-if="utils.isEqual(props.conversation.conversationType, ConversationType.GROUP)">
           <div class="tyn-media tyn-size-md tyn-chat-aside-avatar wr wr-jian border"></div>
-          <div class="tyn-aside-member-name">移除</div>
+          <div class="tyn-aside-member-name">{{ state.i18n.ASIDER_CONVERSATION.REMOVE }}</div>
         </div>
       </div>
     </div>
@@ -369,38 +389,44 @@ watch(() => props.isShow, () => {
       <div class="nav-tabs jg-nav-tabs nav-tabs-line">
         <ul class="jg-aside-ul" v-if="utils.isEqual(props.conversation.conversationType, ConversationType.GROUP)">
           <li class="jg-aside-li">
-            <div class="tyn-aside-title">群聊名称</div>
+            <div class="tyn-aside-title">{{ state.i18n.ASIDER_CONVERSATION.GROUP_NAME }}</div>
             <div class="tyn-media-row jg-df-row">
-              <input type="text" class="tyn-title-overline text-none" v-model="state.groupName" placeholder="输入群聊名称" @keydown.enter="onSaveGroup()"/>
+              <input type="text" class="tyn-title-overline text-none" 
+                @compositionstart="onCompositionStart" 
+                @compositionend="onCompositionEnd" 
+                v-model="state.groupName" 
+                :placeholder="state.i18n.ASIDER_CONVERSATION.GROUP_NAME_PLACEHOLDER" 
+                @keydown.enter="onSaveGroup()"/>
+
               <div class="wr jg-df-modify-icon"></div>
             </div>
           </li>
           <li class="jg-aside-li">
-            <div class="tyn-aside-title">群公告</div>
+            <div class="tyn-aside-title">{{ state.i18n.ASIDER_CONVERSATION.GROUP_NOTICE }}</div>
             <div class="tyn-media-row" @click="onShowGroupNotice(true)">
-              <div class="tyn-title-overline text-none jg-group-notice-line">{{ state.groupNoticeContent || '未设置群公告' }}</div>
+              <div class="tyn-title-overline text-none jg-group-notice-line">{{ state.groupNoticeContent || state.i18n.ASIDER_CONVERSATION.GROUP_NOTICE_NONE }}</div>
             </div>
           </li>
-          <li class="jg-aside-li">
+          <!-- <li class="jg-aside-li">
             <div class="tyn-aside-title">我在本群的昵称</div>
             <div class="tyn-media-row jg-df-row">
-              <input type="text" class="tyn-title-overline text-none" v-model="state.groupDisplayName" placeholder="仅在本群可见" @keydown.enter="onSaveGroupDisplayName()"/>
+              <input type="text" class="tyn-title-overline text-none" @compositionstart="onCompositionStart" @compositionend="onCompositionEnd" v-model="state.groupDisplayName" placeholder="仅在本群可见" @keydown.enter="onSaveGroupDisplayName()"/>
               <div class="wr jg-df-modify-icon"></div>
             </div>
-          </li>
+          </li> -->
           <li class="jg-aside-li jg-aside-bli" v-if="state.group.my_role == GROUP_ROLE.OWNER" @click="onShowTransferGroupOwner(true)">
-            <div class="tyn-aside-title">转让群主</div>
+            <div class="tyn-aside-title">{{ state.i18n.ASIDER_CONVERSATION.TRANSFER_GROUP_OWNER }}</div>
             <span class="tyn-aside-icon wr wr-right"></span>
           </li>
           <li class="jg-bottom-line"></li>
         </ul>
         <ul class="jg-aside-ul">
           <li class="jg-aside-li jg-aside-bli" @click="onShowTranslator(true)">
-            <div class="tyn-aside-title">接收消息自动翻译</div>
+            <div class="tyn-aside-title">{{ state.i18n.ASIDER_CONVERSATION.TRANSLATE_TITLE }}</div>
             <span class="tyn-aside-icon wr wr-right"></span>
           </li>
           <li class="jg-aside-li jg-aside-bli" @click="onShowGroupQrCode(true)">
-            <div class="tyn-aside-title">群组二维码</div>
+            <div class="tyn-aside-title">{{ state.i18n.ASIDER_CONVERSATION.GROUP_QRCODE }}</div>
             <span class="tyn-aside-icon wr wr-right"></span>
           </li>
           <li class="jg-bottom-line"></li>
@@ -417,10 +443,10 @@ watch(() => props.isShow, () => {
     </div>
     <div class="tyn-aside-row tyn-rgaside-footer">
       <div class="nav-tabs jg-nav-tabs nav-tabs-line">
-        <a class="btn w-100 jg-warn-letter" @click="onClearMessages">清空历史消息</a>
+        <a class="btn w-100 jg-warn-letter" @click="onClearMessages">{{ state.i18n.ASIDER_CONVERSATION.CLEAR_MSG_BTN }}</a>
       </div>
       <div class="nav-tabs jg-nav-tabs nav-tabs-line" v-if="utils.isEqual(props.conversation.conversationType, ConversationType.GROUP)">
-        <a class="btn w-100 jg-warn-letter" @click="onQuitGroup()">退出群聊</a>
+        <a class="btn w-100 jg-warn-letter" @click="onQuitGroup()">{{ state.i18n.ASIDER_CONVERSATION.GROUP_QUIT }}</a>
       </div>
     </div>
   </Asider>
@@ -428,7 +454,7 @@ watch(() => props.isShow, () => {
   <AsiderGroupAddMember 
     :is-show="state.isShowFriend" 
     :right="1" 
-    :title="'添加成员'"
+    :title="state.i18n.MODAL_GROUP.ADD_MEMBER_TITLE"
     :conversation="props.conversation" 
     :members="state.members" 
     @oncancel="onCancelGroupCreate">
@@ -473,8 +499,8 @@ watch(() => props.isShow, () => {
   <AsiderQrCode 
     :is-show="state.isShowGroupQrcode"
     :right="1"
-    :title="'群组二维码'"
-    :desc="'扫一扫群二维码，立刻加入群组'"
+    :title="state.i18n.ASIDER_CONVERSATION.GROUP_QRCODE"
+    :desc="state.i18n.ASIDER_CONVERSATION.GROUP_QRCODE_DESC"
     :isGroup="1"
     :uid="props.conversation.conversationId"
     @oncancel="onShowGroupQrCode(false)">
