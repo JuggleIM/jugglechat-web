@@ -25,6 +25,7 @@ let state = reactive({
   isShowGroupDetail: false,
   dropRectX: 0,
   isShowReaction: false,
+  i18n: common.i18n(),
 });
 watch(() => props.message, (msg) => {
   state.mentionMsgs = common.mentionShortFormat(msg);
@@ -36,7 +37,7 @@ function onCopy(){
   let content = common.mentionToText(props.message)
   Clipboard.copy(content, utils.noop, utils.noop);
   context.proxy.$toast({
-    text: `已复制`,
+    text: state.i18n.MESSAGE_TEXT.COPY,
     icon: 'success'
   });
   onShowDrop(false);
@@ -52,9 +53,9 @@ function onRecall() {
 }
 function onModify() {
   let message = props.message;
-  let { content } = state;
+  let { content, i18n } = state;
   if (utils.isEmpty(content)) {
-    return state.errorMsg = '修改内容不能为空呀~';
+    return state.errorMsg = i18n.MESSAGE_TEXT.EDIT_CONTENT_EMPTY;
   }
   emit('onmodify', { message, content });
   state.isModify = false;
@@ -163,8 +164,8 @@ function onResend(){
       <div class="tyn-reply-text" v-if="state.isModify">
         <div>
           <input class="tyn-chat-form-input" v-model="state.content" type="text" @input="onInput()" />
-          <button class="btn btn-sm" @click="onModify">保存</button>
-          <button class="btn btn-sm" @click="onCancelModify">取消</button>
+          <button class="btn btn-sm" @click="onModify">{{state.i18n.COMMON.SAVE_BTN}}</button>
+          <button class="btn btn-sm" @click="onCancelModify">{{state.i18n.COMMON.CANCEL_BTN}}</button>
         </div>
         <span class="small ms-2 text-warning" v-if="state.errorMsg">{{ state.errorMsg }}</span>
       </div>
@@ -172,7 +173,7 @@ function onResend(){
         <ReplyMessage  :message="props.message.referMsg"></ReplyMessage>
         <span class="" v-html="getContent(props.message.content.content)"></span>
         <div class="jg-translate" v-if="props.message.translation" v-html="getContent(props.message.translation)"></div>
-        <span class="tyn-text-modify" v-if="props.message.isUpdated">（已修改）</span>
+        <span class="tyn-text-modify" v-if="props.message.isUpdated">（{{state.i18n.MESSAGE_TEXT.EDIT_TIP}}）</span>
         
         <Reaction :is-show="!utils.isEmpty(props.message.reactions)" :reactions="props.message.reactions" @oncancel="onChoiceEmoji"></Reaction>
 

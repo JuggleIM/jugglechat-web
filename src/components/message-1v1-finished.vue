@@ -12,10 +12,12 @@ let juggleCall = im.getRTCEngine();
 let { CallFinishedReason } = im;
 
 let state = reactive({
-  msg: getMsg()
+  msg: {},
+  i18n: common.i18n(),
 });
-
+utils.extend(state, { msg: getMsg() });
 function getMsg(){
+  let { i18n } = state;
   let reason = juggleCall.convertMsgReason(props.message);
   let { content: { duration } } = props.message;
   let text = '';
@@ -23,37 +25,37 @@ function getMsg(){
     text = common.formatSeconds(Math.floor(duration/1000));
   }else{
     if(utils.isEqual(CallFinishedReason.HANGUP, reason)){
-      text = '已挂断';
+      text = i18n.CALL_FINISHED.HANGUP;
     }
     if(utils.isEqual(CallFinishedReason.DECLINE, reason)){
-      text = '已拒接';
+      text = i18n.CALL_FINISHED.DECLINE;
     }
     if(utils.isEqual(CallFinishedReason.BUSY, reason)){
-      text = '自己忙线';
+      text = i18n.CALL_FINISHED.BUSY;
     }
     if(utils.isEqual(CallFinishedReason.NO_RESPONSE, reason)){
-      text = '未接听';
+      text = i18n.CALL_FINISHED.NO_RESPONSE;
     }
     if(utils.isEqual(CallFinishedReason.CANCEL, reason)){
-      text = '已取消';
+      text = i18n.CALL_FINISHED.CANCEL;
     }
     if(utils.isEqual(CallFinishedReason.OTHER_SIDE_HANGUP, reason)){
-      text = '对方挂断';
+      text = i18n.CALL_FINISHED.REMOTE_HANGUP;
     }
     if(utils.isEqual(CallFinishedReason.OTHER_SIDE_DECLINE, reason)){
-      text = '对方拒接';
+      text = i18n.CALL_FINISHED.REMOTE_DECLINE;
     }
     if(utils.isEqual(CallFinishedReason.OTHER_SIDE_BUSY, reason)){
-      text = '对方忙线';
+      text = i18n.CALL_FINISHED.REMOTE_BUSY;
     }
     if(utils.isEqual(CallFinishedReason.OTHER_SIDE_NO_RESPONSE, reason)){
-      text = '对方未接听';
+      text = i18n.CALL_FINISHED.REMOTE_NO_RESPONSE;
     }
     if(utils.isEqual(CallFinishedReason.OTHER_SIDE_CANCEL, reason)){
-      text = '对方取消';
+      text = i18n.CALL_FINISHED.REMOTE_CANCEL;
     }
     if(utils.isEqual(CallFinishedReason.NETWORK_ERROR, reason)){
-      text = '网络出错';
+      text = i18n.CALL_FINISHED.NETWORK_ERROR;
     }
   }
   

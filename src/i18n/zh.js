@@ -161,5 +161,62 @@ export let ZH = {
       AGENT: '[智能体]',
       RECALL: '{name} 撤回了一条消息',
     }
-  }
+  },
+  MESSAGE_CTX: {
+    AI: '智能回复',
+    COPY: '复制消息',
+    RECALL: '消息撤回',
+    PIN: '消息置顶',
+    FORWARD: '消息转发',
+    REPLY: '消息回复',
+    FAV: '消息收藏',
+    EDIT: '消息修改',
+    DELETE: '消息删除',
+  },
+  CONVERSATION: {
+    FAV_SUCCESS: '收藏成功',
+    MENTION_ALL: '所有人',
+    AI_CONTEXT_EMPTY: '会话无可回复的上下文',
+    MSG_PIN: '由 {name} 置顶',
+    GROUP_BAN: '群组已禁言',
+    AI_THINKING: 'AI 深度思考中...'
+  },
+  MESSAGE_TEXT: {
+    EDIT_TIP: '已修改',
+    COPY: '已复制',
+    EDIT_CONTENT_EMPTY: '修改内容不可为空'
+  },
+  MESSAGE_REPLY: {
+    TIP: '回复'
+  },
+  MESSAGE_RECALL: '{name} 撤回了一条消息',
+  MESSAGE_UNKNOWN: '消息暂不支持',
+  MESSAGE_NONE: '没有更多啦',
+  MESSAGE_CALL: '邀请你音视频通话',
+  CALL_FINISHED: {
+    HANGUP: '已挂断',
+    DECLINE: '已拒接',
+    BUSY: '自己忙线',
+    NO_RESPONSE: '未接听',
+    CANCEL: '已取消',
+    REMOTE_HANGUP: '对方挂断',
+    REMOTE_DECLINE: '对方拒接',
+    REMOTE_BUSY: '对方忙线',
+    REMOTE_NO_RESPONSE: '对方未接听',
+    REMOTE_CANCEL: '对方取消',
+    NETWORK_ERROR: '网络出错',
+  },
+  MESSAGE_FRD_NTF: {
+    OP_ADD: '添加',
+    OP_AGREE: '通过',
+    SELF: '你 {op} {name} 为好友',
+    OTHER: '{name} {op} 你 为好友'
+  },
+  GROUP_NOTIFY: {
+		INVITE: '{name}  邀请 {member} 加入群组',
+		REMOVE: '{name} 将 {member} 移除群组',
+		LEAVE: '{name} 退出了群组',
+		TRAN_OWNER: '{name} 成为了群主',
+		RENAME: '{name} 修改群名称为 {groupName}',
+	},
 };

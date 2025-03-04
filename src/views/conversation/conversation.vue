@@ -52,6 +52,7 @@ let { MessageType, Event, ConversationType, MentionType, SentState, MediaType } 
 let context = getCurrentInstance();
 
 let state = reactive({
+  i18n: common.i18n(),
   isShowAside: false,
   isShowEmoji: false,
   isShowTransfer: false,
@@ -417,7 +418,7 @@ function onSend() {
 
     if (isMentionAll) {
       mentionType = MentionType.ALL;
-      newContent = newContent.replace(`@所有人 `, `{all}`);
+      newContent = newContent.replace(`@${state.i18n.CONVERSATION.MENTION_ALL} `, `{all}`);
     }
     if (isMentionAll && isMentionSomeone) {
       mentionType = MentionType.ALL_SOMEONE;
@@ -458,7 +459,7 @@ function onSend() {
     if(_msg){
       utils.extend(_msg, { sentState: SentState.FAILED });
     }
-    context.proxy.$toast({ text: `消息发送失败: ${error.code}`, icon: 'error' });
+    context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
     isSending = false;
   });
 }
@@ -748,7 +749,7 @@ function getMembers() {
     state.isShowGroupMute = !!group_mute;
     let { members } = result;
     let mentionMembers = [
-      { id: 'all', val: '@', isActive: true, name: '所有人', portrait: '', isAll: true }
+      { id: 'all', val: '@', isActive: true, name: state.i18n.CONVERSATION.MENTION_ALL, portrait: '', isAll: true }
     ];
     members = utils.map(members, (member) => {
       let { user_id: id, nickname: name, avatar: portrait } = member;
@@ -815,7 +816,7 @@ function onResendMessage({ message }){
     if(_msg){
       utils.extend(_msg, { sentState: SentState.FAILED });
     }
-    context.proxy.$toast({ text: `消息发送失败: ${error.code}`, icon: 'error' });
+    context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
   });
 }
 function onPinned({ message }){
@@ -824,9 +825,9 @@ function onPinned({ message }){
 function onFav({ message }){
   conversationTools.addFavoriteMsg(message, (error) => {
     if(error){
-      return context.proxy.$toast({ text: `收藏失败: ${error.code}`, icon: 'error' });
+      return context.proxy.$toast({ text: `Error: ${error.code}`, icon: 'error' });
     }
-    return context.proxy.$toast({ text: `收藏成功`, icon: 'success' });
+    return context.proxy.$toast({ text: state.i18n.CONVERSATION.FAV_SUCCESS, icon: 'success' });
   })
 }
 function onUnpinned(){
@@ -875,7 +876,7 @@ function onAskAI(){
   }
   if(utils.isEqual(msgs.length, 0)){
     state.isAsking = false;
-    return context.proxy.$toast({ text: `当前会话无文本消息`, icon: 'error' });
+    return context.proxy.$toast({ text: state.i18n.CONVERSATION.AI_CONTEXT_EMPTY, icon: 'error' });
   }
   requestAI(msgs);
 }
@@ -897,7 +898,7 @@ function requestAI(msgs){
     let { code, msg, data } = result;
     state.isAsking = false;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
-      return context.proxy.$toast({ text: `AI 回复异常 ${code}`, icon: 'error' });
+      return context.proxy.$toast({ text: `Error: ${code}`, icon: 'error' });
     }
     state.content = data.answer;
   });
@@ -920,6 +921,13 @@ function isStaker(message){
   let { referMsg } = message;
   let isRefer = referMsg && referMsg.name;
   return isText && common.isShowStaker(message) && !isRefer;
+}
+
+function getPinOrigin(){
+  let { pinnedMessage, i18n } = state;
+  let name = common.purify(pinnedMessage.operator.name);
+  let content = utils.templateFormat(i18n.CONVERSATION.MSG_PIN, { name: `<span class="name"> ${name} </span>` });
+  return content;
 }
 </script>
 <template>
@@ -970,7 +978,7 @@ function isStaker(message){
               ></Avatar>
               <div>{{ state.pinnedMessage.message.sender.name }}：{{ state.pinnedMessage.shortName }}</div>
             </li>
-            <li class="jg-pinned-item operator">由 <span class="name">{{ state.pinnedMessage.operator.name }}</span> 置顶</li>
+            <li class="jg-pinned-item operator" v-html="getPinOrigin()"></li>
           </ul>
         </div>
         <ul class="jg-pinned-tools">
@@ -1083,10 +1091,10 @@ function isStaker(message){
         </ul>
       </div>
       <Transfer :is-show="state.isShowTransfer" :op-type="state.msgOpType" @oncancel="onCancelTransfer(false)" @ontransfer="onTransfer"></Transfer>
-      <div class="jg-group-ban" :class="{'jg-ban-none' : !state.isShowGroupMute}">群组已禁言</div>
+      <div class="jg-group-ban" :class="{'jg-ban-none' : !state.isShowGroupMute}">{{ state.i18n.CONVERSATION.GROUP_BAN }}</div>
       <div class="jg-askai-ban" :class="{'jg-ban-none': !state.isAsking}">
         <div class="jg-askai-loading"></div>
-        <div class="jg-askai-memo">AI 深度思考中...</div>
+        <div class="jg-askai-memo">{{ state.i18n.CONVERSATION.AI_THINKING }}</div>
       </div>
     </div>
     <ConversationAsider :is-show="state.isShowAside" 

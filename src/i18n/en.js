@@ -161,5 +161,62 @@ export let EN = {
       AGENT: '[Agent]',
       RECALL: '{name} has recall a message',
     }
+  },
+  MESSAGE_CTX: {
+    AI: 'Ask AI',
+    COPY: 'Copy',
+    RECALL: 'Recall',
+    PIN: 'Pin',
+    FORWARD: 'Forward',
+    REPLY: 'Reply',
+    FAV: 'Favorite',
+    EDIT: 'Edit',
+    DELETE: 'Delete',
+  },
+  CONVERSATION: {
+    FAV_SUCCESS: 'Success',
+    MENTION_ALL: 'All',
+    AI_CONTEXT_EMPTY: 'No context found',
+    MSG_PIN: 'Pinned by {name}',
+    GROUP_BAN: 'The group has been muted',
+    AI_THINKING: 'The AI is in deep thinking...'
+  },
+  MESSAGE_TEXT: {
+    EDIT_TIP: 'Edited',
+    COPY: 'Copied',
+    EDIT_CONTENT_EMPTY: 'Content cannot be empty'
+  },
+  MESSAGE_REPLY: {
+    TIP: 'Reply'
+  },
+  MESSAGE_RECALL: '{name} recalled a message',
+  MESSAGE_UNKNOWN: 'Message is not supported',
+  MESSAGE_NONE: 'No more messages',
+  MESSAGE_CALL: 'invite you to have call',
+  CALL_FINISHED: {
+    HANGUP: 'Hangup',
+    DECLINE: 'Decline',
+    BUSY: 'Busy',
+    NO_RESPONSE: 'No response',
+    CANCEL: 'Cancel',
+    REMOTE_HANGUP: 'Other party hangup',
+    REMOTE_DECLINE: 'Other party decline',
+    REMOTE_BUSY: 'Other party busy',
+    REMOTE_NO_RESPONSE: 'Other party no response',
+    REMOTE_CANCEL: 'Other party cancel',
+    NETWORK_ERROR: 'Network error',
+  },
+  MESSAGE_FRD_NTF: {
+    OP_ADD: 'added',
+    OP_AGREE: 'added',
+    SELF: 'You {op} {name} as a friend',
+    OTHER: '{name} {op} you as a friend'
+  },
+  GROUP_NOTIFY: {
+    INVITE: '{name} invited {member} join the group',
+		REMOVE: '{name} removed {member} from the group',
+		LEAVE: '{name} left the group',
+		TRAN_OWNER: '{name} became the group owner',
+		RENAME: '{name} changed the group name to {groupName}',
   }
 };

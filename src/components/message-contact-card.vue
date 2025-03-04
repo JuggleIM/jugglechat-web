@@ -6,10 +6,12 @@ import { reactive, getCurrentInstance, watch } from "vue";
 import { User } from "../services/index";
 import utils from "../common/utils";
 import { RESPONSE, FRIEND_APPLY_STATUS, CONTACT_TYPE } from "../common/enum";
+import common from "../common/common";
 
 const context = getCurrentInstance();
 const props = defineProps(['message']);
 let state = reactive({
+  i18n: common.i18n(),
   isShowDetail: false,
   current: {}
 });
@@ -21,7 +23,7 @@ function onShow(){
     let { code, data } = result;
     if(!utils.isEqual(code, RESPONSE.SUCCESS)){
       return context.proxy.$toast({
-        text: `查看名片异常 ${code}`,
+        text: `Error: ${code}`,
         icon: 'error'
       });
     }
@@ -66,7 +68,7 @@ function onShowDetail(isShow){
             </div>
             <div class="jg-contact-card-title jg-ellipsis">{{ props.message.content.name }}</div>
           </div>
-          <div class="jg-contact-memo">[个人名片]</div>
+          <div class="jg-contact-memo">{{ state.i18n.MAIN.LAST_MSG.CARD }}</div>
         </div>
       </div>
     </div>
