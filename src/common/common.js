@@ -204,7 +204,7 @@ function filterIgnoreConversations(conversations){
   });
 }
 
-let md = MarkdownIt();
+let md = MarkdownIt({ breaks: true });
 function formatMarkdown(content){
   return md.render(content);
 }
