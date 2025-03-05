@@ -3,6 +3,7 @@
   "short_name": "JuggleGram",
   "start_url": "https://im.juggle.im",
   "display": "standalone",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "/pwa/icon_1024.png",
